@@ -1,0 +1,66 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import FAQAccordion from '../components/ui/FAQAccordion.astro';
+import Button from '../components/ui/Button.astro';
+import FinalCTA from '../components/sections/FinalCTA.astro';
+import { faq, faqPlate } from '../data/faq';
+import { breadcrumbList, faqPage } from '../lib/seo';
+import { whatsappUrl } from '../lib/whatsapp';
+---
+
+<PageLayout
+  title="FAQ — Toutes vos réponses | Lifitness Dakar"
+  description="Tarifs, Carte Confort, essai gratuit, horaires, EMS, boxe, coachs : les questions les plus fréquentes sur Lifitness Dakar, avec des réponses directes."
+  path="/faq"
+  jsonLd={[
+    breadcrumbList([
+      { name: 'Accueil', path: '/' },
+      { name: 'FAQ', path: '/faq' },
+    ]),
+    faqPage(faqPlate()),
+  ]}
+>
+  <section class="mx-auto max-w-3xl px-4 pt-16 pb-20 sm:px-6">
+    <SectionHeader
+      eyebrow="FAQ"
+      title="Vos questions. Nos réponses."
+      subtitle="Pas de langue de bois : tout ce qu'on nous demande à l'accueil, écrit noir sur blanc."
+    />
+
+    <div class="mt-12 flex flex-col gap-12">
+      {faq.map((groupe) => (
+        <div>
+          <h2 class="mb-5 font-mono text-sm tracking-wider text-brand-cyan uppercase">
+            {groupe.theme}
+          </h2>
+          <FAQAccordion items={groupe.questions} />
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-14 flex flex-col items-center gap-4 rounded-card border border-white/10 bg-dark-secondary p-8 text-center">
+      <h2 class="text-xl font-bold">Vous n'avez pas trouvé votre réponse ?</h2>
+      <p class="max-w-md text-sm text-light-primary/70">
+        Écrivez-nous sur WhatsApp ou appelez la salle la plus proche. On répond
+        pendant les horaires d'ouverture.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <Button
+          href={whatsappUrl(
+            'Bonjour, j’ai une question qui n’apparaît pas dans la FAQ.',
+          )}
+          variant="ghost"
+          external
+        >
+          Poser ma question sur WhatsApp
+        </Button>
+        <Button href="/contact" variant="outline">
+          Page contact
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <FinalCTA />
+</PageLayout>

@@ -1,0 +1,172 @@
+---
+import { Image } from 'astro:assets';
+import PageLayout from '../layouts/PageLayout.astro';
+import Eyebrow from '../components/ui/Eyebrow.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import Card from '../components/ui/Card.astro';
+import StatBlock from '../components/ui/StatBlock.astro';
+import Button from '../components/ui/Button.astro';
+import CarteConfort from '../components/sections/CarteConfort.astro';
+import FinalCTA from '../components/sections/FinalCTA.astro';
+import { breadcrumbList, healthAndBeautyBusiness } from '../lib/seo';
+import { salles } from '../data/salles';
+import boutiqueImg from '../assets/images/boutique/lifitness-bar.png';
+import salleImg from '../assets/images/hero/hero-halteres-miroir.jpg';
+
+const stats = [
+  { valeur: '2', label: 'Salles à Dakar' },
+  { valeur: '16 h', label: 'D’ouverture en semaine' },
+  { valeur: '1', label: 'Abonnement, zéro frontière' },
+];
+
+const valeurs = [
+  {
+    titre: 'L’exigence, sans l’intimidation',
+    texte:
+      'Un matériel premium, un encadrement sérieux, mais aucune arrogance. On accueille le débutant complet comme l’athlète confirmé, avec la même énergie.',
+    accent: 'text-brand-magenta',
+  },
+  {
+    titre: 'La proximité, en vrai',
+    texte:
+      'Les coachs connaissent votre prénom, vos objectifs et vos points faibles. Ici, vous n’êtes pas un badge de plus qui traverse le plateau.',
+    accent: 'text-brand-cyan',
+  },
+  {
+    titre: 'La liberté de mouvement',
+    texte:
+      'La Carte Confort supprime la seule contrainte qui compte : le lieu. Travail aux Almadies, habitez Sacré-Cœur ? Les deux salles sont à vous.',
+    accent: 'text-brand-amber',
+  },
+];
+---
+
+<PageLayout
+  title="Le club — Notre histoire, nos salles, notre vision | Lifitness Dakar"
+  description="Lifitness Dakar, c'est un club premium multi-salles aux Almadies et à Sacré-Cœur 3 : musculation, boxe, EMS, aquatique, coachs dès l'ouverture et une seule carte pour tout."
+  path="/club"
+  jsonLd={[
+    breadcrumbList([
+      { name: 'Accueil', path: '/' },
+      { name: 'Le club', path: '/club' },
+    ]),
+    healthAndBeautyBusiness(),
+  ]}
+>
+  <section class="relative isolate overflow-hidden">
+    <Image
+      src={salleImg}
+      alt="Vue du plateau musculation Lifitness avec miroirs"
+      sizes="100vw"
+      class="absolute inset-0 -z-10 size-full object-cover"
+    />
+    <div
+      class="absolute inset-0 -z-10 bg-gradient-to-t from-dark-primary via-dark-primary/80 to-dark-primary/50"
+      aria-hidden="true"
+    ></div>
+    <div class="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+      <nav aria-label="Fil d'Ariane" class="mb-6">
+        <ol class="flex gap-2 font-mono text-xs text-light-primary/60">
+          <li>
+            <a href="/" class="hover:text-brand-pink">
+              Accueil
+            </a>
+          </li>
+          <li aria-hidden="true">/</li>
+          <li class="text-light-primary">Le club</li>
+        </ol>
+      </nav>
+      <div class="flex max-w-2xl flex-col items-start gap-5">
+        <Eyebrow>Le club</Eyebrow>
+        <h1 class="text-4xl font-bold text-balance sm:text-5xl">
+          Deux salles. Une seule obsession :
+          <span class="text-gradient">votre progression.</span>
+        </h1>
+        <p class="text-lg text-light-primary/85 pretty">
+          Lifitness est né d'un constat simple : à Dakar, on trouve des salles
+          de sport, mais rarement un club. Un endroit où l'on vous attend, où
+          l'on vous cadre, et où votre abonnement vous ouvre toutes les portes.
+        </p>
+      </div>
+      <div class="mt-12 flex flex-wrap gap-x-14 gap-y-8">
+        {stats.map((s) => (
+          <StatBlock valeur={s.valeur} label={s.label} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+    <SectionHeader
+      eyebrow="Notre vision"
+      title="Le club premium, sans le protocole"
+      subtitle="Un espace pensé pour les sportifs exigeants de Dakar : cadres, expatriés, athlètes, et toutes celles et ceux qui veulent un lieu sûr et sérieux pour s'entraîner."
+    />
+    <div class="mt-10 grid gap-6 md:grid-cols-3">
+      {valeurs.map((v) => (
+        <Card>
+          <span
+            class:list={['font-mono text-2xl', v.accent]}
+            aria-hidden="true"
+          >
+            ■
+          </span>
+          <h3 class="mt-3 text-xl font-bold">{v.titre}</h3>
+          <p class="mt-2 text-sm text-light-primary/70">{v.texte}</p>
+        </Card>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-dark-secondary/60">
+    <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-2">
+      <div>
+        <Eyebrow>Nos salles</Eyebrow>
+        <h2 class="mt-4 text-3xl font-bold text-balance">
+          Almadies face à la Corniche. Sacré-Cœur derrière l'Auchan.
+        </h2>
+        <p class="mt-4 text-light-primary/75 pretty">
+          Deux adresses, deux ambiances, un seul abonnement. Le vaisseau amiral
+          des Almadies aligne plateaux complets, ring de boxe, pôle aquatique et
+          sauna. Sacré-Cœur 3 apporte l'énergie du quartier : musculation,
+          cardio, cours collectifs et coaching personnalisé.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <Button href="/salles">Découvrir les salles</Button>
+          <Button href="/galerie" variant="outline">
+            Voir la galerie
+          </Button>
+        </div>
+      </div>
+      <Image
+        src={boutiqueImg}
+        alt="Barre Lifitness, identité visuelle du club"
+        class="w-full rounded-card border border-white/10 object-cover"
+      />
+    </div>
+  </section>
+
+  <CarteConfort />
+
+  <section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+    <div class="grid gap-6 sm:grid-cols-2">
+      {salles.map((salle) => (
+        <Card>
+          <h3 class="text-xl font-bold">{salle.nom}</h3>
+          <p class="mt-2 font-mono text-xs text-light-primary/55">
+            {salle.adresse} — {salle.complement}
+          </p>
+          <p class="mt-3 text-sm text-light-primary/70">{salle.description}</p>
+          <a
+            href={`/salles/${salle.slug}`}
+            class="mt-4 inline-block font-mono text-xs text-brand-magenta hover:text-brand-pink"
+          >
+            Fiche de la salle →
+          </a>
+        </Card>
+      ))}
+    </div>
+  </section>
+
+  <FinalCTA />
+</PageLayout>

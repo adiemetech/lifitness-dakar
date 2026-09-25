@@ -1,0 +1,82 @@
+---
+import { Image } from 'astro:assets';
+import PageLayout from '../layouts/PageLayout.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import Button from '../components/ui/Button.astro';
+import FinalCTA from '../components/sections/FinalCTA.astro';
+import { breadcrumbList } from '../lib/seo';
+import salleImg from '../assets/images/hero/hero-halteres-miroir.jpg';
+import plateauImg from '../assets/images/hero/hero-developpe-halteres.png';
+import boutiqueImg from '../assets/images/boutique/lifitness-bar.png';
+import coachImg from '../assets/images/coachs/coach-bras-croises.png';
+
+// PLACEHOLDER : galerie à enrichir avec les vraies photos des deux salles
+// et les vidéos courtes fournies par le client.
+const photos = [
+  {
+    src: salleImg,
+    alt: 'Plateau de musculation Lifitness avec haltères et miroirs',
+    legende: 'Le plateau musculation, côté miroirs',
+  },
+  {
+    src: plateauImg,
+    alt: 'Adhérent en développé haltères accompagné par un coach',
+    legende: 'Développé haltères, encadrement coach',
+  },
+  {
+    src: coachImg,
+    alt: 'Coach Lifitness bras croisés dans la salle',
+    legende: 'Nos coachs vous attendent dès l’ouverture',
+  },
+  {
+    src: boutiqueImg,
+    alt: 'Barre Lifitness sur fond de la marque',
+    legende: 'L’identité Lifitness : la barre et la marque',
+  },
+];
+---
+
+<PageLayout
+  title="Galerie photos — Les salles Lifitness Dakar en images"
+  description="Plongez dans l'ambiance Lifitness Dakar : plateaux de musculation, coaching, ring de boxe et espaces premium aux Almadies et à Sacré-Cœur 3."
+  path="/galerie"
+  jsonLd={breadcrumbList([
+    { name: 'Accueil', path: '/' },
+    { name: 'Galerie', path: '/galerie' },
+  ])}
+>
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-20 sm:px-6">
+    <SectionHeader
+      eyebrow="Galerie"
+      title="Venez voir. Vous jugerez sur pièce."
+      subtitle="Quelques images de l'ambiance Lifitness. Rien ne remplace une visite — la première séance est offerte."
+    />
+
+    <div class="mt-10 grid gap-6 sm:grid-cols-2">
+      {photos.map((photo) => (
+        <figure class="group overflow-hidden rounded-card border border-white/10 bg-dark-secondary">
+          <Image
+            src={photo.src}
+            alt={photo.alt}
+            width={900}
+            loading="lazy"
+            class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+          />
+          <figcaption class="px-5 py-4 font-mono text-xs text-light-primary/60">
+            {photo.legende}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <div class="mt-12 flex flex-col items-center gap-4 text-center">
+      <p class="max-w-md text-sm text-light-primary/65">
+        La galerie s'enrichit : photos des deux salles, piscine, ring de boxe et
+        vidéos de séances arrivent bientôt.
+      </p>
+      <Button href="/essai-gratuit">Réserver ma séance d'essai gratuite</Button>
+    </div>
+  </section>
+
+  <FinalCTA />
+</PageLayout>
