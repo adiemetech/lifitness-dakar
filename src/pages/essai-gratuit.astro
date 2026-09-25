@@ -1,0 +1,77 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import Eyebrow from '../components/ui/Eyebrow.astro';
+import EssaiForm from '../components/forms/EssaiForm.astro';
+import Card from '../components/ui/Card.astro';
+import { breadcrumbList } from '../lib/seo';
+
+const etapes = [
+  {
+    numero: '1',
+    titre: 'Vous réservez en 60 secondes',
+    texte:
+      'Remplissez le formulaire : votre demande part préremplie sur WhatsApp, avec une copie email si vous préférez.',
+  },
+  {
+    numero: '2',
+    titre: 'On vous rappelle pour caler le créneau',
+    texte:
+      'Un coach confirme l’heure, la salle et votre objectif. Aucune avance, aucune carte bancaire.',
+  },
+  {
+    numero: '3',
+    titre: 'Vous testez tout, gratuitement',
+    texte:
+      'Visite guidée, séance complète sur les plateaux ou en cours collectif. Vous décidez ensuite, sans pression.',
+  },
+];
+---
+
+<PageLayout
+  title="Essai gratuit — 1ère séance offerte | Lifitness Dakar"
+  description="Réservez votre séance d'essai gratuite chez Lifitness Dakar : visite guidée, essai complet des plateaux et cours collectifs, sans engagement, aux Almadies ou à Sacré-Cœur 3."
+  path="/essai-gratuit"
+  jsonLd={breadcrumbList([
+    { name: 'Accueil', path: '/' },
+    { name: 'Essai gratuit', path: '/essai-gratuit' },
+  ])}
+>
+  <section class="bg-gradient-brand">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <div class="flex max-w-2xl flex-col items-start gap-5">
+        <Eyebrow class="text-white/85">Séance d'essai offerte</Eyebrow>
+        <h1 class="text-4xl font-bold text-white text-balance sm:text-5xl">
+          Testez avant de vous engager. On ne vous demande rien d'autre.
+        </h1>
+        <p class="text-lg text-white/90 pretty">
+          Première séance offerte, visite guidée incluse, dans la salle de votre
+          choix. Remplissez le formulaire : on s'occupe du reste.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <ol class="grid gap-6 md:grid-cols-3">
+      {etapes.map((e) => (
+        <li>
+          <Card class="h-full">
+            <p class="font-mono text-3xl text-brand-magenta">{e.numero}</p>
+            <h2 class="mt-3 text-lg font-bold">{e.titre}</h2>
+            <p class="mt-2 text-sm text-light-primary/70">{e.texte}</p>
+          </Card>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-20 sm:px-6">
+    <div class="rounded-card border border-white/10 bg-dark-secondary p-7 sm:p-10">
+      <h2 class="text-2xl font-bold">Réservez votre séance</h2>
+      <p class="mt-2 mb-8 text-sm text-light-primary/70">
+        Inscriptions contractuelles sur place, après votre essai. Pas avant.
+      </p>
+      <EssaiForm />
+    </div>
+  </section>
+</PageLayout>

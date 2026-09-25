@@ -1,0 +1,55 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import CoachCard from '../components/ui/CoachCard.astro';
+import Button from '../components/ui/Button.astro';
+import FinalCTA from '../components/sections/FinalCTA.astro';
+import { coachs } from '../data/coachs';
+import { breadcrumbList } from '../lib/seo';
+---
+
+<PageLayout
+  title="Coachs — Une équipe présente dès l'ouverture | Lifitness Dakar"
+  description="L'équipe Lifitness Dakar : coachs musculation, boxe et maîtres-nageurs diplômés, présents dès l'ouverture dans les deux salles pour vous encadrer."
+  path="/coachs"
+  jsonLd={breadcrumbList([
+    { name: 'Accueil', path: '/' },
+    { name: 'Coachs', path: '/coachs' },
+  ])}
+>
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-10 sm:px-6">
+    <SectionHeader
+      eyebrow="L'équipe"
+      title="Des coachs présents. Pas des surveillants."
+      subtitle="Dès l'ouverture, un coach circule sur les plateaux, encadre le ring et sécurise la piscine. Votre technique progresse, vos blessures restent au vestiaire."
+    />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {coachs.map((coach) => (
+        <CoachCard coach={coach} />
+      ))}
+    </div>
+    <p class="mt-6 text-xs text-light-primary/55">
+      Équipe en cours de finalisation — portraits et bios définitifs à venir.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+    <div class="flex flex-col items-start gap-4 rounded-card border border-white/10 bg-dark-secondary p-8 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h2 class="text-xl font-bold">Envie de coacher chez Lifitness ?</h2>
+        <p class="mt-1 text-sm text-light-primary/70">
+          Diplômés, passionnés, exigeants : écrivez-nous, on regarde chaque
+          candidature.
+        </p>
+      </div>
+      <Button href="/contact" variant="outline">
+        Candidater
+      </Button>
+    </div>
+  </section>
+
+  <FinalCTA />
+</PageLayout>

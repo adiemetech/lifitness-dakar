@@ -1,0 +1,119 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import Card from '../components/ui/Card.astro';
+import Button from '../components/ui/Button.astro';
+import FinalCTA from '../components/sections/FinalCTA.astro';
+import { planning } from '../data/planning';
+import { programmes } from '../data/programmes';
+import { horaires } from '../data/horaires';
+import { salles } from '../data/salles';
+import { breadcrumbList, BOOKING_URL } from '../lib/seo';
+
+const familles = programmes.filter((p) =>
+  ['crossfit', 'trx', 'boxe', 'ems', 'collectifs', 'aquatique'].includes(
+    p.slug,
+  ),
+);
+---
+
+<PageLayout
+  title="Planning — Cours collectifs & réservations | Lifitness Dakar"
+  description="Planning des cours collectifs Lifitness Dakar : crossfit, TRX, boxe, EMS, Zumba, Step, Les Mills, aquagym et aquabike, dans les deux salles. Réservation via Multiresa."
+  path="/planning"
+  jsonLd={breadcrumbList([
+    { name: 'Accueil', path: '/' },
+    { name: 'Planning', path: '/planning' },
+  ])}
+>
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-10 sm:px-6">
+    <SectionHeader
+      eyebrow="Planning"
+      title="Votre semaine se réserve en deux clics."
+      subtitle="Cours collectifs, sessions EMS et créneaux aquatiques se réservent via Multiresa Lifitness. Les plateaux, eux, restent en accès libre aux horaires d'ouverture."
+    />
+    <div class="mt-8 flex flex-wrap gap-4">
+      <Button href={BOOKING_URL} external>
+        Réserver via Multiresa
+      </Button>
+      <Button href="/contact" variant="outline">
+        Demander le planning par message
+      </Button>
+    </div>
+  </section>
+
+  {planning.length > 0 ? (
+    <section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+      <div class="overflow-x-auto rounded-card border border-white/10">
+        <table class="w-full min-w-[640px] text-left text-sm">
+          <thead class="bg-dark-secondary font-mono text-xs tracking-widest uppercase text-light-primary/60">
+            <tr>
+              <th class="px-5 py-4">Jour</th>
+              <th class="px-5 py-4">Heure</th>
+              <th class="px-5 py-4">Cours</th>
+              <th class="px-5 py-4">Salle</th>
+            </tr>
+          </thead>
+          <tbody>
+            {planning.map((s) => (
+              <tr class="border-t border-white/10">
+                <td class="px-5 py-3 font-semibold">{s.jour}</td>
+                <td class="px-5 py-3 font-mono">{s.heure}</td>
+                <td class="px-5 py-3">{s.cours}</td>
+                <td class="px-5 py-3 text-light-primary/70">
+                  {salles.find((x) => x.slug === s.salle)?.nom}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  ) : (
+    <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {familles.map((f) => (
+          <Card>
+            <p
+              class:list={[
+                'font-mono text-xs tracking-[0.25em] uppercase',
+                f.accent,
+              ]}
+            >
+              {f.categorie}
+            </p>
+            <h2 class="mt-2 text-lg font-bold">{f.nom}</h2>
+            <p class="mt-2 text-sm text-light-primary/70">{f.accroche}</p>
+            <a
+              href={`/programmes/${f.slug}`}
+              class="mt-4 inline-block text-sm font-semibold text-brand-cyan hover:text-brand-pink"
+            >
+              Détails du programme →
+            </a>
+          </Card>
+        ))}
+      </div>
+      <p class="mt-8 rounded-card border border-dashed border-white/20 p-6 text-center text-sm text-light-primary/70">
+        La grille horaire détaillée semaine par semaine est disponible via
+        Multiresa Lifitness et à l'accueil des deux salles. Elle sera publiée
+        ici dès sa transmission.
+      </p>
+    </section>
+  )}
+
+  <section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+    <h2 class="mb-6 text-2xl font-bold">Horaires d'ouverture des plateaux</h2>
+    <ul class="grid gap-4 sm:grid-cols-3">
+      {horaires.map((c) => (
+        <li class="rounded-card border border-white/10 bg-dark-secondary p-5">
+          <p class="font-semibold">{c.label}</p>
+          <p class="mt-1 font-mono text-brand-cyan">
+            {c.opens.replace(':', 'h')} – {c.closes.replace(':', 'h')}
+          </p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <FinalCTA />
+</PageLayout>

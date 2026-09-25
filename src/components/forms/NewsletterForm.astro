@@ -1,0 +1,60 @@
+<form data-news-form class="flex flex-col gap-3 sm:flex-row" novalidate>
+  <div class="flex-1">
+    <label for="news-email" class="sr-only">
+      Votre email
+    </label>
+    <input
+      id="news-email"
+      name="email"
+      type="email"
+      required
+      placeholder="votre@email.com"
+      class="w-full rounded-pill border border-white/15 bg-dark-primary px-5 py-3 text-sm text-light-primary placeholder:text-light-primary/40 focus:border-brand-magenta focus:outline-none"
+    />
+    <p
+      data-error="email"
+      class="mt-1 hidden font-mono text-xs text-brand-orange"
+    ></p>
+  </div>
+  <button
+    type="submit"
+    class="rounded-pill border border-white/25 px-6 py-3 text-sm font-semibold transition hover:border-brand-magenta hover:text-brand-pink"
+  >
+    Je m'inscris
+  </button>
+  <p
+    data-news-success
+    class="hidden w-full text-sm text-brand-cyan"
+    role="status"
+  >
+    Dernière étape : confirmez via le lien email qui s'est préparé.
+  </p>
+</form>
+
+<script>
+  import { z } from 'zod';
+  import { SITE_EMAIL } from '../../lib/seo';
+
+  const form = document.querySelector<HTMLFormElement>('[data-news-form]');
+  if (form) {
+    const error = form.querySelector<HTMLElement>('[data-error="email"]');
+    const success = form.querySelector<HTMLElement>('[data-news-success]');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      error?.classList.add('hidden');
+      success?.classList.add('hidden');
+      const value = String(new FormData(form).get('email') ?? '');
+      const result = z.email().safeParse(value);
+      if (!result.success) {
+        if (error) {
+          error.textContent = 'Email invalide';
+          error.classList.remove('hidden');
+        }
+        return;
+      }
+      const body = `Inscription newsletter Lifitness :\n${value}`;
+      window.location.href = `mailto:${SITE_EMAIL}?subject=${encodeURIComponent('Inscription newsletter')}&body=${encodeURIComponent(body)}`;
+      success?.classList.remove('hidden');
+    });
+  }
+</script>

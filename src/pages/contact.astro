@@ -1,0 +1,128 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import ContactForm from '../components/forms/ContactForm.astro';
+import NewsletterForm from '../components/forms/NewsletterForm.astro';
+import MapEmbed from '../components/sections/MapEmbed.astro';
+import { salles, telHref } from '../data/salles';
+import { SITE_EMAIL, SAME_AS, BOOKING_URL, breadcrumbList } from '../lib/seo';
+---
+
+<PageLayout
+  title="Contact — Almadies & Sacré-Cœur | Lifitness Dakar"
+  description="Contactez Lifitness Dakar : formulaire avec réponse WhatsApp, téléphones des deux salles, email, adresses et réseaux sociaux. Almadies et Sacré-Cœur 3."
+  path="/contact"
+  jsonLd={breadcrumbList([
+    { name: 'Accueil', path: '/' },
+    { name: 'Contact', path: '/contact' },
+  ])}
+>
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-10 sm:px-6">
+    <SectionHeader
+      eyebrow="Contact"
+      title="Une question ? Une réponse. Vite."
+      subtitle="Formulaire, WhatsApp, téléphone ou email : choisissez votre canal, on répond dans la journée aux horaires d'ouverture."
+    />
+  </section>
+
+  <section class="mx-auto grid max-w-6xl gap-10 px-4 pb-16 sm:px-6 lg:grid-cols-[1.3fr_1fr]">
+    <div class="rounded-card border border-white/10 bg-dark-secondary p-7 sm:p-10">
+      <h2 class="mb-8 text-2xl font-bold">Écrivez-nous</h2>
+      <ContactForm />
+    </div>
+
+    <aside class="flex flex-col gap-6">
+      <div class="rounded-card border border-white/10 bg-dark-secondary p-7">
+        <h2 class="text-lg font-bold">Téléphones</h2>
+        <ul class="mt-4 flex flex-col gap-3 text-sm">
+          {salles.map((salle) => (
+            <li>
+              <p class="text-light-primary/70">{salle.nom}</p>
+              <a
+                href={telHref(salle)}
+                class="font-mono text-brand-cyan transition hover:text-brand-pink"
+              >
+                {salle.telephone}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="rounded-card border border-white/10 bg-dark-secondary p-7">
+        <h2 class="text-lg font-bold">Email & réservation</h2>
+        <ul class="mt-4 flex flex-col gap-2 text-sm">
+          <li>
+            <a
+              href={`mailto:${SITE_EMAIL}`}
+              class="font-mono text-brand-cyan hover:text-brand-pink"
+            >
+              {SITE_EMAIL}
+            </a>
+          </li>
+          <li>
+            <a
+              href={BOOKING_URL}
+              class="text-light-primary/80 hover:text-brand-pink"
+            >
+              Réservation Multiresa Lifitness
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="rounded-card border border-white/10 bg-dark-secondary p-7">
+        <h2 class="text-lg font-bold">Réseaux</h2>
+        <ul class="mt-4 flex flex-col gap-2 text-sm">
+          <li>
+            <a
+              href={SAME_AS[0]}
+              target="_blank"
+              rel="noopener"
+              class="text-light-primary/80 hover:text-brand-pink"
+            >
+              Facebook — LifitNes
+            </a>
+          </li>
+          <li>
+            <a
+              href={SAME_AS[1]}
+              target="_blank"
+              rel="noopener"
+              class="text-light-primary/80 hover:text-brand-pink"
+            >
+              Instagram — @lifitnessdakar
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+  </section>
+
+  <section class="mx-auto grid max-w-6xl gap-6 px-4 pb-16 sm:px-6 md:grid-cols-2">
+    {salles.map((salle) => (
+      <div class="flex flex-col gap-3">
+        <h2 class="text-lg font-bold">{salle.nom}</h2>
+        <p class="text-sm text-light-primary/70">
+          {salle.adresse} · {salle.complement}
+        </p>
+        {salle.gps ? (
+          <MapEmbed lat={salle.gps.lat} lng={salle.gps.lng} titre={salle.nom} />
+        ) : (
+          <p class="rounded-card border border-dashed border-white/20 p-6 text-sm text-light-primary/60">
+            Repère : {salle.complement.toLowerCase()}. Carte à venir.
+          </p>
+        )}
+      </div>
+    ))}
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-20 sm:px-6">
+    <div class="rounded-card border border-white/10 bg-dark-secondary p-8 text-center">
+      <h2 class="text-xl font-bold">Restez dans la boucle</h2>
+      <p class="mx-auto mt-2 mb-6 max-w-md text-sm text-light-primary/70">
+        Nouveaux cours, événements et offres membres : un email par mois, pas un
+        de plus.
+      </p>
+      <NewsletterForm />
+    </div>
+  </section>
+</PageLayout>

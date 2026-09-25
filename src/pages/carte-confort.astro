@@ -1,0 +1,89 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import SalleCard from '../components/ui/SalleCard.astro';
+import Card from '../components/ui/Card.astro';
+import Button from '../components/ui/Button.astro';
+import FinalCTA from '../components/sections/FinalCTA.astro';
+import { salles } from '../data/salles';
+import { breadcrumbList } from '../lib/seo';
+
+const avantages = [
+  {
+    titre: 'Zéro friction géographique',
+    texte:
+      'Un jour aux Almadies près du bureau, un week-end à Sacré-Cœur près de chez vous. Votre abonnement suit votre vie, pas l’inverse.',
+  },
+  {
+    titre: 'Deux ambiances, une seule communauté',
+    texte:
+      'Chaque salle a son énergie : la Corniche pour les séances du soir, Sacré-Cœur pour l’ambiance quartier. Vous faites partie des deux.',
+  },
+  {
+    titre: 'Toujours une salle ouverte près de vous',
+    texte:
+      'Mêmes horaires dans les deux salles : 7h–23h en semaine, 8h–20h le samedi, 8h–13h le dimanche. Aucune excuse horaire.',
+  },
+];
+---
+
+<PageLayout
+  title="Carte Confort — 1 abonnement, 2 salles | Lifitness Dakar"
+  description="La Carte Confort Lifitness : un seul abonnement pour un accès illimité aux deux salles de Dakar, Almadies et Sacré-Cœur 3, quel que soit le jour ou l'heure."
+  path="/carte-confort"
+  jsonLd={breadcrumbList([
+    { name: 'Accueil', path: '/' },
+    { name: 'Carte Confort', path: '/carte-confort' },
+  ])}
+>
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-10 sm:px-6">
+    <SectionHeader
+      eyebrow="Le concept Lifitness"
+      title="Carte Confort : votre corps n'a pas de quartier."
+      subtitle="Un seul abonnement, un accès illimité aux deux salles Lifitness de Dakar. Peu importe le lieu, peu importe l'heure : votre carte ouvre toutes les portes."
+      align="center"
+      class="mx-auto"
+    />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <div class="grid gap-6 md:grid-cols-3">
+      {avantages.map((a, i) => (
+        <Card>
+          <p class="font-mono text-3xl text-brand-cyan">0{i + 1}</p>
+          <h2 class="mt-3 text-xl font-bold">{a.titre}</h2>
+          <p class="mt-2 text-sm text-light-primary/70">{a.texte}</p>
+        </Card>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <h2 class="mb-6 text-2xl font-bold">Les deux salles de votre carte</h2>
+    <div class="grid gap-6 md:grid-cols-2">
+      {salles.map((salle) => (
+        <SalleCard salle={salle} />
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+    <div class="flex flex-col items-center gap-6 rounded-card border border-brand-magenta/40 bg-dark-secondary p-10 text-center">
+      <h2 class="text-2xl font-bold text-balance">
+        La Carte Confort est incluse dans toutes les formules.
+      </h2>
+      <p class="max-w-xl text-sm text-light-primary/75">
+        Mensuel, forfait 3 mois ou BASIC+ : aucun supplément pour profiter des
+        deux salles. Comparez les formules et choisissez la vôtre.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <Button href="/tarifs">Voir les tarifs</Button>
+        <Button href="/essai-gratuit" variant="outline">
+          Réserver mon essai gratuit
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <FinalCTA />
+</PageLayout>
