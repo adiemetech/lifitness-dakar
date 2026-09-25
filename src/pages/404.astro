@@ -1,0 +1,48 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import Eyebrow from '../components/ui/Eyebrow.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<PageLayout
+  title="Page introuvable (404) | Lifitness Dakar"
+  description="Cette page n'existe pas ou a été déplacée. Revenez à l'accueil, réservez votre séance d'essai gratuite ou explorez nos salles et programmes."
+  path="/404"
+>
+  <section class="relative isolate flex min-h-[70svh] items-center overflow-hidden">
+    <div
+      class="absolute inset-0 -z-10 bg-gradient-brand opacity-20"
+      aria-hidden="true"
+    ></div>
+    <div class="mx-auto flex w-full max-w-3xl flex-col items-start gap-6 px-4 py-24 sm:px-6">
+      <Eyebrow>Erreur 404</Eyebrow>
+      <p
+        class="font-display text-7xl font-bold text-gradient sm:text-9xl"
+        aria-hidden="true"
+      >
+        404
+      </p>
+      <h1 class="text-3xl font-bold text-balance sm:text-5xl">
+        Cette page a sauté une série de jambes.
+      </h1>
+      <p class="text-lg text-light-primary/75 pretty">
+        Le lien est cassé ou la page a bougé. Pas de panique : tout le reste du
+        club est à un clic.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <Button href="/" size="lg">
+          Retour à l'accueil
+        </Button>
+        <Button href="/essai-gratuit" size="lg" variant="outline">
+          Réserver ma séance d'essai gratuite
+        </Button>
+        <Button href="/tarifs" variant="ghost">
+          Voir les tarifs
+        </Button>
+        <Button href="/contact" variant="ghost">
+          Nous contacter
+        </Button>
+      </div>
+    </div>
+  </section>
+</PageLayout>

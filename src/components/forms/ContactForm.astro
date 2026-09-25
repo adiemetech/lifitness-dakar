@@ -135,6 +135,7 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
   import { contactSchema, buildContactMessage } from '../../lib/form';
   import { whatsappUrl } from '../../lib/whatsapp';
   import { SITE_EMAIL } from '../../lib/seo';
+  import { trackEvent, EVENTS } from '../../lib/analytics';
 
   const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
   if (form) {
@@ -182,6 +183,7 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
         navigator.clipboard.writeText(message),
       );
       window.open(waUrl, '_blank', 'noopener');
+      trackEvent(EVENTS.formulaireContact, { salle: result.data.salle });
       success?.classList.remove('hidden');
       success?.classList.add('flex');
       success?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });

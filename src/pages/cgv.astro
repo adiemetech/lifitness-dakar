@@ -1,0 +1,115 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { societe } from '../data/legal';
+import { fraisInscription, formules, noteGel } from '../data/tarifs';
+---
+
+<LegalLayout
+  title="Conditions générales de vente | Lifitness Dakar"
+  description="CGV des abonnements Lifitness Dakar : formules, frais d'inscription, Carte Confort, gel d'abonnement, paiement et résiliation."
+  path="/cgv"
+  pageName="Conditions générales de vente"
+>
+  <!-- PLACEHOLDER : moyens de paiement, délai de rétractation et modalités de
+       résiliation à faire valider par le client avant mise en production. -->
+  <h2>1. Objet</h2>
+  <p>
+    Les présentes conditions générales de vente (CGV) régissent les abonnements
+    et prestations vendus par {societe.nomCommercial} dans ses salles de Dakar
+    (Almadies et Sacré-Cœur 3) et via le site lifitness-dakar.com.
+  </p>
+
+  <h2>2. Prestations</h2>
+  <p>
+    {societe.nomCommercial} propose l'accès à ses deux salles de sport :
+    plateaux de musculation et cardio, cours collectifs, boxe, EMS, pôle
+    aquatique et sauna selon la formule souscrite. Chaque abonnement inclut la
+    <strong>Carte Confort</strong> : un accès illimité aux deux salles, quel que
+    soit le jour ou l'heure d'ouverture.
+  </p>
+
+  <h2>3. Tarifs</h2>
+  <p>
+    {fraisInscription.label} :{' '}
+    <strong>
+      {fraisInscription.montant} {fraisInscription.unite}
+    </strong>
+    , payés une seule fois à l'inscription, quelle que soit la formule.
+  </p>
+  <ul>
+    {formules.map((f) => (
+      <li>
+        <strong>{f.nom}</strong> — {f.prix} {f.unite} : {f.description}
+      </li>
+    ))}
+  </ul>
+  <p>
+    Les prix sont indiqués en francs CFA (FCFA), toutes taxes comprises. Ils
+    peuvent être modifiés à tout moment ; les tarifs applicables sont ceux en
+    vigueur au jour de l'inscription.
+  </p>
+
+  <h2>4. Durée et reconduction</h2>
+  <p>
+    La formule mensuelle est souscrite sans engagement de durée : elle se
+    renouvelle mois par mois par tacite reconduction. Les forfaits de 3 mois et
+    plus sont payés d'avance pour la durée choisie.
+  </p>
+
+  <h2>5. Gel d'abonnement</h2>
+  <p>
+    {noteGel} En cas d'absence de plus d'une semaine (voyage, maladie,
+    déplacement professionnel), l'adhérent peut demander le gel de son
+    abonnement sur les forfaits longs. L'échéance est décalée d'autant, sur
+    présentation d'un justificatif et validation de l'accueil.
+  </p>
+
+  <h2>6. Séance d'essai</h2>
+  <p>
+    La première séance d'essai est offerte, sans engagement et sans contrepartie
+    financière. Elle comprend la visite de la salle et une séance encadrée. Elle
+    ne donne pas accès aux prestations réservées aux adhérents (cours
+    spécifiques, EMS) sauf accord de l'équipe.
+  </p>
+
+  <h2>7. Paiement</h2>
+  <p>
+    Le paiement s'effectue à l'accueil des salles. Moyens de paiement acceptés :
+    à compléter et valider (espèces, mobile money, carte bancaire). Aucun
+    paiement en ligne n'est proposé sur ce site à ce jour : les formulaires de
+    réservation génèrent une demande de contact, pas une vente.
+  </p>
+
+  <h2>8. Résiliation</h2>
+  <p>
+    La formule mensuelle peut être arrêtée à tout moment, sans frais, en
+    prévenant l'accueil avant la date d'échéance du mois en cours. Les forfaits
+    payés d'avance ne sont pas remboursables, sauf gel d'abonnement dans les
+    conditions de l'article 5 ou cas de force majeure apprécié par la direction.
+  </p>
+
+  <h2>9. Règlement intérieur et sécurité</h2>
+  <p>
+    L'accès aux salles implique le respect du règlement intérieur affiché dans
+    chaque club : tenue de sport obligatoire, serviette conseillée, respect du
+    matériel et des autres adhérents. L'encadrement par un coach est fortement
+    recommandé pour les pratiquants débutants. {societe.nomCommercial} décline
+    toute responsabilité en cas d'utilisation non encadrée du matériel ou de
+    non-respect des consignes.
+  </p>
+
+  <h2>10. Données personnelles</h2>
+  <p>
+    Les données collectées lors de l'inscription ou via le site sont traitées
+    conformément à notre
+    <a href="/confidentialite">politique de confidentialité</a> et à la loi
+    sénégalaise n° 2008-12 du 25 janvier 2008.
+  </p>
+
+  <h2>11. Litiges</h2>
+  <p>
+    Les présentes CGV sont régies par le droit sénégalais. À défaut de
+    résolution amiable, tout litige relève de la compétence des juridictions de
+    Dakar. Contact : <a href={`mailto:${societe.email}`}>{societe.email}</a>.
+  </p>
+</LegalLayout>

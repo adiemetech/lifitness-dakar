@@ -1,0 +1,84 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { societe, hebergeur } from '../data/legal';
+---
+
+<LegalLayout
+  title="Mentions légales | Lifitness Dakar"
+  description="Mentions légales du site lifitness-dakar.com : éditeur, hébergement, propriété intellectuelle, données personnelles et droit applicable."
+  path="/mentions-legales"
+  pageName="Mentions légales"
+>
+  <!-- PLACEHOLDER : raison sociale, RCCM, NINEA et directeur de publication
+       à compléter par le client avant mise en production. -->
+  <h2>1. Éditeur du site</h2>
+  <p>
+    Le site <strong>lifitness-dakar.com</strong> est édité par
+    {societe.raisonSociale} ({societe.formeJuridique}), exploitant le réseau de
+    salles de sport <strong>{societe.nomCommercial}</strong>.
+  </p>
+  <ul>
+    <li>Siège social : {societe.siege}</li>
+    <li>
+      RCCM : {societe.rccm} — NINEA : {societe.ninea}
+    </li>
+    <li>Directeur de la publication : {societe.directeurPublication}</li>
+    <li>
+      Téléphone :{' '}
+      <a href={`tel:${societe.telephone.replace(/[^+\d]/g, '')}`}>
+        {societe.telephone}
+      </a>
+    </li>
+    <li>
+      Email : <a href={`mailto:${societe.email}`}>{societe.email}</a>
+    </li>
+  </ul>
+
+  <h2>2. Hébergement</h2>
+  <p>Ce site est hébergé par :</p>
+  <ul>
+    <li>{hebergeur.nom}</li>
+    <li>{hebergeur.adresse}</li>
+    <li>
+      <a href={hebergeur.site}>{hebergeur.site}</a>
+    </li>
+  </ul>
+
+  <h2>3. Propriété intellectuelle</h2>
+  <p>
+    L'ensemble des contenus du site (textes, logo, identité visuelle,
+    photographies, structure) est la propriété exclusive de{' '}
+    {societe.nomCommercial}, sauf mention contraire. Toute reproduction,
+    représentation ou diffusion, totale ou partielle, sans autorisation écrite
+    préalable est interdite.
+  </p>
+  <p>
+    Certaines photographies sont des visuels de travail en attente de
+    remplacement par les visuels officiels du club.
+  </p>
+
+  <h2>4. Données personnelles</h2>
+  <p>
+    Le traitement des données personnelles est décrit dans notre
+    <a href="/confidentialite">politique de confidentialité</a>. Conformément à
+    la loi sénégalaise n° 2008-12 du 25 janvier 2008 sur la protection des
+    données à caractère personnel, vous disposez d'un droit d'accès, de
+    rectification et de suppression de vos données.
+  </p>
+
+  <h2>5. Responsabilité</h2>
+  <p>
+    Les informations publiées (horaires, tarifs, programmes, planning) sont
+    fournies à titre indicatif et peuvent évoluer sans préavis.{' '}
+    {societe.nomCommercial}
+    ne saurait être tenu responsable des erreurs ou omissions, ni de
+    l'indisponibilité temporaire du site.
+  </p>
+
+  <h2>6. Droit applicable</h2>
+  <p>
+    Les présentes mentions légales sont régies par le droit sénégalais. Tout
+    litige relatif à l'utilisation du site relève de la compétence des
+    juridictions de Dakar, Sénégal.
+  </p>
+</LegalLayout>

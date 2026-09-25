@@ -165,6 +165,7 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
   import { essaiSchema, buildEssaiMessage } from '../../lib/form';
   import { whatsappUrl } from '../../lib/whatsapp';
   import { SITE_EMAIL } from '../../lib/seo';
+  import { trackEvent, EVENTS } from '../../lib/analytics';
 
   const form = document.querySelector<HTMLFormElement>('[data-essai-form]');
   if (form) {
@@ -212,6 +213,10 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
         navigator.clipboard.writeText(message),
       );
       window.open(waUrl, '_blank', 'noopener');
+      trackEvent(EVENTS.formulaireEssai, {
+        salle: result.data.salle,
+        objectif: result.data.objectif,
+      });
       success?.classList.remove('hidden');
       success?.classList.add('flex');
       success?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });

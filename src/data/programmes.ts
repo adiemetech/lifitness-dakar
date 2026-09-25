@@ -87,7 +87,7 @@ export const programmes: Programme[] = [
       'Technique, sac, pattes d’ours',
       'Sparring léger encadré',
     ],
-    accent: 'text-brand-violet',
+    accent: 'text-brand-pink', // violet #AE068E : contraste insuffisant sur fond sombre
   },
   {
     slug: 'ems',
@@ -102,7 +102,7 @@ export const programmes: Programme[] = [
       'Tous les groupes musculaires simultanés',
       'Parfait pour les agendas chargés',
     ],
-    accent: 'text-brand-blue',
+    accent: 'text-brand-cyan', // blue #0354E0 : contraste insuffisant sur fond sombre
   },
   {
     slug: 'collectifs',

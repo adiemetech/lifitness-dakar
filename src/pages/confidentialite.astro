@@ -1,0 +1,100 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { societe } from '../data/legal';
+---
+
+<LegalLayout
+  title="Politique de confidentialité | Lifitness Dakar"
+  description="Comment Lifitness Dakar traite vos données : formulaires de contact, WhatsApp, absence de stockage serveur, cookies et vos droits selon la loi sénégalaise."
+  path="/confidentialite"
+  pageName="Politique de confidentialité"
+>
+  <h2>1. Principes</h2>
+  <p>
+    Ce site est un site vitrine statique. Il ne contient ni base de données, ni
+    compte utilisateur, ni traceur publicitaire. Nous collectons le minimum :
+    uniquement ce que vous choisissez de nous envoyer.
+  </p>
+
+  <h2>2. Données collectées via les formulaires</h2>
+  <p>
+    Les formulaires du site (essai gratuit, contact, newsletter) collectent :
+    nom, téléphone, email (facultatif), salle souhaitée, objectif et niveau
+    (formulaire d'essai), message libre.
+  </p>
+  <p>
+    <strong>
+      Ces données ne transitent pas par un serveur nous appartenant.
+    </strong>
+    À la validation, votre navigateur ouvre WhatsApp avec un message prérempli
+    (ou votre logiciel email pour la copie email). Le site lui-même ne stocke
+    rien : aucune donnée de formulaire n'est enregistrée sur l'hébergement.
+  </p>
+  <p>
+    Les données que vous nous transmettez ensuite (via WhatsApp, email,
+    téléphone ou en salle) sont utilisées uniquement pour : répondre à votre
+    demande, planifier votre séance d'essai, gérer votre adhésion et vous
+    envoyer des informations pratiques si vous y consentez.
+  </p>
+
+  <h2>3. Base légale et finalité</h2>
+  <p>
+    Le traitement repose sur votre consentement (envoi volontaire d'un
+    formulaire ou d'un message) et sur l'exécution de nos prestations (gestion
+    de l'abonnement). Conformément à la loi sénégalaise n° 2008-12 du 25 janvier
+    2008 sur la protection des données à caractère personnel, les traitements
+    liés à l'adhésion font l'objet des formalités requises auprès de la CDP.
+  </p>
+
+  <h2>4. Destinataires</h2>
+  <p>
+    Seules les équipes de {societe.nomCommercial} (accueil et encadrement des
+    deux salles) accèdent à vos données, dans la limite de ce que nécessite
+    votre suivi. Aucune donnée n'est vendue ni cédée à des tiers.
+  </p>
+
+  <h2>5. Durée de conservation</h2>
+  <p>
+    Les données des adhérents sont conservées pendant la durée de l'adhésion,
+    puis archivées le temps des obligations légales. Les simples demandes de
+    contact non suivies d'adhésion sont supprimées au bout de 12 mois.
+  </p>
+
+  <h2>6. Cookies et mesure d'audience</h2>
+  <p>
+    Le site n'utilise <strong>aucun cookie</strong> de suivi par défaut. Une
+    mesure d'audience respectueuse de la vie privée (Plausible ou Umami, sans
+    cookie ni profilage individuel) peut être activée ultérieurement ; elle
+    comptabilise des visites agrégées, sans identifier les personnes. Cette page
+    sera mise à jour le cas échéant.
+  </p>
+
+  <h2>7. Vos droits</h2>
+  <p>
+    Vous disposez d'un droit d'accès, de rectification, de suppression et
+    d'opposition concernant vos données. Pour les exercer, écrivez-nous :
+  </p>
+  <ul>
+    <li>
+      Email : <a href={`mailto:${societe.email}`}>{societe.email}</a>
+    </li>
+    <li>
+      Téléphone :{' '}
+      <a href={`tel:${societe.telephone.replace(/[^+\d]/g, '')}`}>
+        {societe.telephone}
+      </a>
+    </li>
+    <li>Courrier : {societe.siege}</li>
+  </ul>
+  <p>
+    Vous pouvez également adresser une réclamation à la Commission de Protection
+    des Données Personnelles (CDP) du Sénégal.
+  </p>
+
+  <h2>8. Sécurité</h2>
+  <p>
+    Les échanges WhatsApp et email voyagent sur des infrastructures tierces hors
+    de notre contrôle. Pour toute information sensible, privilégiez un échange
+    en salle ou par téléphone.
+  </p>
+</LegalLayout>

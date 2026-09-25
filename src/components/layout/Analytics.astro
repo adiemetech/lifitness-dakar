@@ -1,0 +1,45 @@
+---
+import { analyticsProvider } from '../../lib/analytics';
+
+const plausibleDomain = import.meta.env.PUBLIC_ANALYTICS_DOMAIN;
+const plausibleSrc =
+  import.meta.env.PUBLIC_ANALYTICS_SRC ?? 'https://plausible.io/js/script.js';
+const umamiSrc = import.meta.env.PUBLIC_UMAMI_SRC;
+const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
+---
+
+{analyticsProvider === 'plausible' && plausibleDomain && (
+  <script
+    is:inline
+    defer
+    data-domain={plausibleDomain}
+    src={plausibleSrc}
+  ></script>
+)}
+{analyticsProvider === 'umami' && umamiSrc && umamiWebsiteId && (
+  <script
+    is:inline
+    defer
+    src={umamiSrc}
+    data-website-id={umamiWebsiteId}
+  ></script>
+)}
+
+<script>
+  import { analyticsProvider, trackEvent, EVENTS } from '../../lib/analytics';
+
+  if (analyticsProvider !== 'none') {
+    document.addEventListener('click', (event) => {
+      const link = (event.target as Element | null)?.closest?.('a');
+      if (!link) return;
+      const href = link.getAttribute('href') ?? '';
+      if (href.includes('/essai-gratuit')) {
+        trackEvent(EVENTS.ctaEssaiGratuit, { source: location.pathname });
+      } else if (href.includes('wa.me')) {
+        trackEvent(EVENTS.clicWhatsapp, { source: location.pathname });
+      } else if (href.startsWith('tel:')) {
+        trackEvent(EVENTS.clicTelephone, { source: location.pathname });
+      }
+    });
+  }
+</script>
