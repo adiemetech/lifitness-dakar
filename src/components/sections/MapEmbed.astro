@@ -1,17 +1,20 @@
 ---
+import type { Lang } from '../../i18n/ui';
+
 export interface Props {
   lat: number;
   lng: number;
   titre: string;
+  lang?: Lang;
 }
 
-const { lat, lng, titre } = Astro.props;
+const { lat, lng, titre, lang = 'fr' } = Astro.props;
 const src = `https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed`;
 ---
 
 <iframe
   src={src}
-  title={`Carte — ${titre}`}
+  title={lang === 'en' ? `Map — ${titre}` : `Carte — ${titre}`}
   loading="lazy"
   referrerpolicy="no-referrer-when-downgrade"
   class="aspect-[4/3] w-full rounded-card border border-white/10 grayscale-[35%] contrast-[1.05]"

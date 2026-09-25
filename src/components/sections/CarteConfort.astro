@@ -2,8 +2,16 @@
 import SectionHeader from '../ui/SectionHeader.astro';
 import Card from '../ui/Card.astro';
 import Button from '../ui/Button.astro';
+import type { Lang } from '../../i18n/ui';
+import { localizedPath } from '../../i18n/routes';
 
-const piliers = [
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'fr' } = Astro.props;
+
+const piliersFr = [
   {
     numero: '01',
     couleur: 'text-brand-amber',
@@ -26,13 +34,56 @@ const piliers = [
       'De 7h à 23h en semaine, un coach est là pour vous cadrer, vous corriger et vous pousser.',
   },
 ];
+
+const piliersEn = [
+  {
+    numero: '01',
+    couleur: 'text-brand-amber',
+    titre: 'Unlimited access to both gyms',
+    texte:
+      'Almadies or Sacré-Cœur 3: badge in, walk in, train. No restrictions on location or time slot.',
+  },
+  {
+    numero: '02',
+    couleur: 'text-brand-magenta',
+    titre: 'Every area included',
+    texte:
+      'Full floors, ring, pool, sauna and Les Mills group classes: everything is in your plan.',
+  },
+  {
+    numero: '03',
+    couleur: 'text-brand-cyan',
+    titre: 'Coaches on site from opening time',
+    texte:
+      'From 7am to 11pm on weekdays, a coach is there to guide you, correct you and push you.',
+  },
+];
+
+const piliers = lang === 'en' ? piliersEn : piliersFr;
+
+const header =
+  lang === 'en'
+    ? {
+        eyebrow: 'Comfort Card',
+        title: 'One membership. Two gyms. Zero borders.',
+        subtitle:
+          'Your Comfort Card opens the doors of Almadies and Sacré-Cœur 3, whatever the day, whatever the time. Train where you want, when you want.',
+        cta: 'Discover the Comfort Card',
+      }
+    : {
+        eyebrow: 'Carte Confort',
+        title: 'Un abonnement. Deux salles. Zéro frontière.',
+        subtitle:
+          "Votre Carte Confort ouvre les portes des Almadies et de Sacré-Cœur 3, peu importe le jour, peu importe l'heure. Entraînez-vous là où vous voulez, quand vous voulez.",
+        cta: 'Découvrir la Carte Confort',
+      };
 ---
 
 <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
   <SectionHeader
-    eyebrow="Carte Confort"
-    title="Un abonnement. Deux salles. Zéro frontière."
-    subtitle="Votre Carte Confort ouvre les portes des Almadies et de Sacré-Cœur 3, peu importe le jour, peu importe l'heure. Entraînez-vous là où vous voulez, quand vous voulez."
+    eyebrow={header.eyebrow}
+    title={header.title}
+    subtitle={header.subtitle}
   />
   <div class="mt-10 grid gap-6 md:grid-cols-3">
     {piliers.map((p) => (
@@ -44,6 +95,6 @@ const piliers = [
     ))}
   </div>
   <div class="mt-10">
-    <Button href="/carte-confort">Découvrir la Carte Confort</Button>
+    <Button href={localizedPath('/carte-confort', lang)}>{header.cta}</Button>
   </div>
 </section>

@@ -1,12 +1,7 @@
 export interface Programme {
   slug: string;
   nom: string;
-  categorie:
-    | 'Plateaux'
-    | 'Cours collectifs'
-    | 'Technologies'
-    | 'Pôle aquatique'
-    | 'Détente';
+  categorie: string;
   accroche: string;
   description: string;
   points: string[];

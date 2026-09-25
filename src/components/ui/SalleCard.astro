@@ -3,12 +3,15 @@ import type { Salle } from '../../data/salles';
 import { telHref } from '../../data/salles';
 import Card from './Card.astro';
 import Button from './Button.astro';
+import type { Lang } from '../../i18n/ui';
 
 export interface Props {
   salle: Salle;
+  lang?: Lang;
 }
 
-const { salle } = Astro.props;
+const { salle, lang = 'fr' } = Astro.props;
+const href = lang === 'en' ? `/en/gyms/${salle.slug}` : `/salles/${salle.slug}`;
 ---
 
 <Card class="flex h-full flex-col gap-4">
@@ -20,8 +23,8 @@ const { salle } = Astro.props;
   </div>
   <p class="text-sm text-light-primary/80 pretty">{salle.description}</p>
   <div class="mt-auto flex flex-wrap items-center gap-4 pt-2">
-    <Button href={`/salles/${salle.slug}`} size="sm">
-      Voir la salle
+    <Button href={href} size="sm">
+      {lang === 'en' ? 'View gym' : 'Voir la salle'}
     </Button>
     <a
       href={telHref(salle)}

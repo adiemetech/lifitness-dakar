@@ -1,29 +1,55 @@
 ---
 import SectionHeader from '../ui/SectionHeader.astro';
 import { avis } from '../../data/avis';
+import { avisEn } from '../../data/en/avis';
+import type { Lang } from '../../i18n/ui';
+import { localizedPath } from '../../i18n/routes';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'fr' } = Astro.props;
+const source = lang === 'en' ? avisEn : avis;
+
+const header =
+  lang === 'en'
+    ? {
+        eyebrow: 'Social proof',
+        title: 'They sweat here. They tell it better than we do.',
+        aria: 'Member testimonials',
+        scroll: 'Scroll to read more reviews ·',
+        all: 'all reviews',
+        rating: (n: number) => `Rating: ${n} out of 5`,
+      }
+    : {
+        eyebrow: 'Preuve sociale',
+        title: 'Ils suent ici. Ils en parlent mieux que nous.',
+        aria: "Témoignages d'adhérents",
+        scroll: "Faites défiler pour lire plus d'avis ·",
+        all: 'tous les avis',
+        rating: (n: number) => `Note : ${n} sur 5`,
+      };
 ---
 
 <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-  <SectionHeader
-    eyebrow="Preuve sociale"
-    title="Ils suent ici. Ils en parlent mieux que nous."
-  />
+  <SectionHeader eyebrow={header.eyebrow} title={header.title} />
   <ul
     class="-mx-4 mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 sm:mx-0 sm:px-0"
-    aria-label="Témoignages d'adhérents"
+    aria-label={header.aria}
   >
-    {avis.map((a) => (
+    {source.map((a) => (
       <li class="w-[85%] shrink-0 snap-start sm:w-[46%] lg:w-[31%]">
         <figure class="flex h-full flex-col gap-4 rounded-card border border-white/10 bg-dark-secondary p-6">
           <p
             class="font-mono text-sm text-brand-amber"
-            aria-label={`Note : ${a.note} sur 5`}
+            aria-label={header.rating(a.note)}
           >
             {'★'.repeat(a.note)}
             <span class="text-light-primary/30">{'★'.repeat(5 - a.note)}</span>
           </p>
           <blockquote class="text-sm text-light-primary/85 pretty">
-            « {a.texte} »
+            {lang === 'en' ? `" ${a.texte} "` : `« ${a.texte} »`}
           </blockquote>
           <figcaption class="mt-auto font-mono text-xs tracking-widest text-light-primary/60 uppercase">
             {a.nom} · {a.quartier}
@@ -33,9 +59,12 @@ import { avis } from '../../data/avis';
     ))}
   </ul>
   <p class="mt-2 text-xs text-light-primary/50">
-    Faites défiler pour lire plus d'avis ·
-    <a href="/avis" class="text-brand-cyan underline hover:text-brand-pink">
-      tous les avis
+    {header.scroll}
+    <a
+      href={localizedPath('/avis', lang)}
+      class="text-brand-cyan underline hover:text-brand-pink"
+    >
+      {header.all}
     </a>
   </p>
 </section>

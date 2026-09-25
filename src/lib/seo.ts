@@ -1,5 +1,7 @@
 import { salles } from '../data/salles';
+import { sallesEn } from '../data/en/salles';
 import { horaires } from '../data/horaires';
+import type { Lang } from '../i18n/ui';
 
 export const SITE_NAME = 'Lifitness Dakar';
 export const SITE_URL = 'https://lifitness-dakar.com';
@@ -40,14 +42,16 @@ export function organization() {
   };
 }
 
-export function healthAndBeautyBusiness() {
+export function healthAndBeautyBusiness(lang: Lang = 'fr') {
   return {
     '@context': 'https://schema.org',
     '@type': 'HealthAndBeautyBusiness',
     name: SITE_NAME,
     url: SITE_URL,
     description:
-      'Club de fitness premium multi-salles à Dakar : musculation, boxe, EMS, aquatique, cours collectifs et sauna.',
+      lang === 'en'
+        ? 'Premium multi-gym fitness club in Dakar: strength training, boxing, EMS, aqua classes and sauna.'
+        : 'Club de fitness premium multi-salles à Dakar : musculation, boxe, EMS, aquatique, cours collectifs et sauna.',
     telephone: salles.map((s) => s.telephone),
     email: SITE_EMAIL,
     address: salles.map((s) => postalAddress(s.nom, s.adresse)),
@@ -57,14 +61,19 @@ export function healthAndBeautyBusiness() {
   };
 }
 
-export function localBusiness(slug: string) {
-  const salle = salles.find((s) => s.slug === slug);
+export function localBusiness(slug: string, lang: Lang = 'fr') {
+  const source = lang === 'en' ? sallesEn : salles;
+  const salle = source.find((s) => s.slug === slug);
   if (!salle) throw new Error(`Salle inconnue : ${slug}`);
+  const url =
+    lang === 'en'
+      ? `${SITE_URL}/en/gyms/${salle.slug}`
+      : `${SITE_URL}/salles/${salle.slug}`;
   return {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: salle.nom,
-    url: `${SITE_URL}/salles/${salle.slug}`,
+    url,
     description: salle.description,
     telephone: salle.telephone,
     email: SITE_EMAIL,

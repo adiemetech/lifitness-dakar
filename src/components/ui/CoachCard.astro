@@ -1,20 +1,24 @@
 ---
 import { Image } from 'astro:assets';
 import type { Coach } from '../../data/coachs';
+import type { Lang } from '../../i18n/ui';
 import coachPortrait from '../../assets/images/coachs/coach-bras-croises.png';
 
 export interface Props {
   coach: Coach;
+  lang?: Lang;
 }
 
-const { coach } = Astro.props;
+const { coach, lang = 'fr' } = Astro.props;
 ---
 
 <article class="flex h-full flex-col overflow-hidden rounded-card border border-white/10 bg-dark-secondary">
   {coach.photo ? (
     <Image
       src={coachPortrait}
-      alt={`Portrait de ${coach.nom}`}
+      alt={
+        lang === 'en' ? `Portrait of ${coach.nom}` : `Portrait de ${coach.nom}`
+      }
       sizes="(min-width: 768px) 33vw, 100vw"
       class="aspect-[4/5] w-full object-cover object-top"
     />

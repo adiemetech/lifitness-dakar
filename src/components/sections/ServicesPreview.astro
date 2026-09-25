@@ -2,8 +2,16 @@
 import SectionHeader from '../ui/SectionHeader.astro';
 import ProgrammeCard from '../ui/ProgrammeCard.astro';
 import { programmes } from '../../data/programmes';
+import { programmesEn } from '../../data/en/programmes';
+import type { Lang } from '../../i18n/ui';
 
-const apercu = [
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'fr' } = Astro.props;
+
+const apercuFr = [
   'musculation',
   'collectifs',
   'boxe',
@@ -11,18 +19,44 @@ const apercu = [
   'aquatique',
   'sauna',
 ];
-const selection = programmes.filter((p) => apercu.includes(p.slug));
+const apercuEn = [
+  'strength',
+  'group-classes',
+  'boxing',
+  'ems',
+  'aqua',
+  'sauna',
+];
+
+const source = lang === 'en' ? programmesEn : programmes;
+const apercu = lang === 'en' ? apercuEn : apercuFr;
+const selection = source.filter((p) => apercu.includes(p.slug));
+
+const header =
+  lang === 'en'
+    ? {
+        eyebrow: 'Services & equipment',
+        title: 'Everything you need to progress. Nothing superfluous.',
+        subtitle:
+          'Full floors, Les Mills group classes, boxing ring, EMS, aqua area and sauna. Pick your playground.',
+      }
+    : {
+        eyebrow: 'Services & équipements',
+        title: "Tout ce qu'il faut pour progresser. Rien de superflu.",
+        subtitle:
+          'Plateaux complets, cours collectifs signés Les Mills, ring de boxe, EMS, pôle aquatique et sauna. Choisis ton terrain de jeu.',
+      };
 ---
 
 <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
   <SectionHeader
-    eyebrow="Services & équipements"
-    title="Tout ce qu'il faut pour progresser. Rien de superflu."
-    subtitle="Plateaux complets, cours collectifs signés Les Mills, ring de boxe, EMS, pôle aquatique et sauna. Choisis ton terrain de jeu."
+    eyebrow={header.eyebrow}
+    title={header.title}
+    subtitle={header.subtitle}
   />
   <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
     {selection.map((p) => (
-      <ProgrammeCard programme={p} />
+      <ProgrammeCard programme={p} lang={lang} />
     ))}
   </div>
 </section>

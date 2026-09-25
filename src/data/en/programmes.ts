@@ -1,21 +1,13 @@
-export interface ProgrammeEn {
-  slug: string;
-  name: string;
-  category:
-    'Floors' | 'Group Classes' | 'Technologies' | 'Aqua Area' | 'Recovery';
-  tagline: string;
-  description: string;
-  points: string[];
-  accent: string;
-}
+import type { Programme } from '../programmes';
 
-// Slugs EN alignés sur src/i18n/routes.ts
-export const programmesEn: ProgrammeEn[] = [
+// Slugs EN alignés sur src/i18n/routes.ts ; même interface que la donnée FR
+// pour réutiliser les composants (ProgrammeCard, etc.).
+export const programmesEn: Programme[] = [
   {
     slug: 'strength',
-    name: 'Strength Training',
-    category: 'Floors',
-    tagline: 'Free weights and guided machines, without endless waiting.',
+    nom: 'Strength Training',
+    categorie: 'Floors',
+    accroche: 'Free weights and guided machines, without endless waiting.',
     description:
       'Large strength floor: free weights, racks, guided machines and dumbbells up to heavy loads. A coach circulates at all times to fix your technique and push your loads up.',
     points: [
@@ -28,9 +20,9 @@ export const programmesEn: ProgrammeEn[] = [
   },
   {
     slug: 'cardio',
-    name: 'Cardio Training',
-    category: 'Floors',
-    tagline: 'Treadmills, bikes, ellipticals: burn, endure, repeat.',
+    nom: 'Cardio Training',
+    categorie: 'Floors',
+    accroche: 'Treadmills, bikes, ellipticals: burn, endure, repeat.',
     description:
       'Cardio area equipped with treadmills, bikes and ellipticals. Intervals or steady-state endurance: your coach builds the session that matches your goal.',
     points: [
@@ -43,9 +35,9 @@ export const programmesEn: ProgrammeEn[] = [
   },
   {
     slug: 'crossfit',
-    name: 'CrossFit',
-    category: 'Group Classes',
-    tagline: 'Coached WODs, a community that pushes you.',
+    nom: 'CrossFit',
+    categorie: 'Group Classes',
+    accroche: 'Coached WODs, a community that pushes you.',
     description:
       'Coached CrossFit sessions: mobility, strength, conditioning. Coaches scale every movement to your level — beginners welcome, egos left in the locker room.',
     points: [
@@ -58,9 +50,9 @@ export const programmesEn: ProgrammeEn[] = [
   },
   {
     slug: 'trx',
-    name: 'TRX',
-    category: 'Group Classes',
-    tagline: 'Your bodyweight, straps, zero cheating.',
+    nom: 'TRX',
+    categorie: 'Group Classes',
+    accroche: 'Your bodyweight, straps, zero cheating.',
     description:
       'TRX works everything: core, strength, stability. Every exercise adjusts in one move to go from beginner to advanced within the same session.',
     points: [
@@ -73,9 +65,9 @@ export const programmesEn: ProgrammeEn[] = [
   },
   {
     slug: 'boxing',
-    name: 'Boxing',
-    category: 'Technologies',
-    tagline: 'A ring, coaches, rounds that clear your head.',
+    nom: 'Boxing',
+    categorie: 'Technologies',
+    accroche: 'A ring, coaches, rounds that clear your head.',
     description:
       'Boxing ring and dedicated coaches: technique, mitt work, light supervised sparring. Boxing builds cardio, coordination and mental strength — without unnecessary damage.',
     points: [
@@ -88,9 +80,9 @@ export const programmesEn: ProgrammeEn[] = [
   },
   {
     slug: 'ems',
-    name: 'EMS',
-    category: 'Technologies',
-    tagline: '20 minutes worth a full session.',
+    nom: 'EMS',
+    categorie: 'Technologies',
+    accroche: '20 minutes worth a full session.',
     description:
       'Full-body electrostimulation in 20-minute flash sessions: a coach controls the intensity while you work every muscle group simultaneously. Efficient when your schedule is tight.',
     points: [
@@ -103,9 +95,9 @@ export const programmesEn: ProgrammeEn[] = [
   },
   {
     slug: 'group-classes',
-    name: 'Group Classes',
-    category: 'Group Classes',
-    tagline: 'Zumba, Step, Abs & Glutes and Les Mills programs.',
+    nom: 'Group Classes',
+    categorie: 'Group Classes',
+    accroche: 'Zumba, Step, Abs & Glutes and Les Mills programs.',
     description:
       'The class schedule that never sleeps: Zumba, Step, Abs & Glutes and Les Mills programs — Body Pump, Body Combat, Body Attack. Coached, choreographed, motivating.',
     points: [
@@ -118,9 +110,9 @@ export const programmesEn: ProgrammeEn[] = [
   },
   {
     slug: 'aqua',
-    name: 'Aqua Area',
-    category: 'Aqua Area',
-    tagline: 'Aqua gym, aqua bike and certified lifeguards.',
+    nom: 'Aqua Area',
+    categorie: 'Aqua Area',
+    accroche: 'Aqua gym, aqua bike and certified lifeguards.',
     description:
       'Pool supervised by certified lifeguards: energizing aqua gym, fat-burning aqua bike and free swim. The lowest joint impact in the club, for all levels.',
     points: [
@@ -133,9 +125,9 @@ export const programmesEn: ProgrammeEn[] = [
   },
   {
     slug: 'sauna',
-    name: 'Sauna',
-    category: 'Recovery',
-    tagline: 'Recover like a pro. Leave like new.',
+    nom: 'Sauna',
+    categorie: 'Recovery',
+    accroche: 'Recover like a pro. Leave like new.',
     description:
       'After the effort, the sauna: muscle recovery, mental relaxation, detox. The mandatory punctuation of any serious session.',
     points: [
@@ -148,7 +140,7 @@ export const programmesEn: ProgrammeEn[] = [
   },
 ];
 
-export const getProgrammeEn = (slug: string): ProgrammeEn => {
+export const getProgrammeEn = (slug: string): Programme => {
   const programme = programmesEn.find((p) => p.slug === slug);
   if (!programme) throw new Error(`Unknown program: ${slug}`);
   return programme;

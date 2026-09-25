@@ -1,11 +1,14 @@
 ---
 import type { Formule } from '../../data/tarifs';
+import type { Lang } from '../../i18n/ui';
+import { localizedPath } from '../../i18n/routes';
 
 export interface Props {
   formule: Formule;
+  lang?: Lang;
 }
 
-const { formule } = Astro.props;
+const { formule, lang = 'fr' } = Astro.props;
 ---
 
 <div
@@ -18,7 +21,7 @@ const { formule } = Astro.props;
 >
   {formule.highlight && (
     <p class="absolute -top-3 left-7 rounded-pill bg-gradient-brand px-3 py-1 font-mono text-xs tracking-widest text-white uppercase">
-      Le plus choisi
+      {lang === 'en' ? 'Most popular' : 'Le plus choisi'}
     </p>
   )}
   <div>
@@ -42,7 +45,7 @@ const { formule } = Astro.props;
     ))}
   </ul>
   <a
-    href="/essai-gratuit"
+    href={localizedPath('/essai-gratuit', lang)}
     class:list={[
       'mt-auto inline-flex items-center justify-center rounded-pill px-6 py-3 text-sm font-semibold transition',
       formule.highlight
@@ -50,6 +53,8 @@ const { formule } = Astro.props;
         : 'border border-white/25 hover:border-brand-magenta hover:text-brand-pink',
     ]}
   >
-    Commencer par une séance offerte
+    {lang === 'en'
+      ? 'Start with a free session'
+      : 'Commencer par une séance offerte'}
   </a>
 </div>
