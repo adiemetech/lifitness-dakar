@@ -1,0 +1,22 @@
+{
+  "name": "Lifitness Dakar",
+  "short_name": "Lifitness",
+  "description": "Club de fitness premium multi-salles à Dakar : musculation, boxe, EMS, aquatique, cours collectifs et sauna.",
+  "lang": "fr",
+  "start_url": "/",
+  "display": "minimal-ui",
+  "background_color": "#090909",
+  "theme_color": "#F70188",
+  "icons": [
+    {
+      "src": "/favicon/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

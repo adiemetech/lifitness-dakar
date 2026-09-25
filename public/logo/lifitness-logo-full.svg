@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" role="img" aria-label="Lifitness Dakar">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="0" gradientTransform="rotate(15)">
+      <stop offset="0" stop-color="#FBA701"/>
+      <stop offset="0.3" stop-color="#FA6204"/>
+      <stop offset="0.55" stop-color="#F70188"/>
+      <stop offset="0.8" stop-color="#AE068E"/>
+      <stop offset="1" stop-color="#03A1F3"/>
+    </linearGradient>
+  </defs>
+  <!-- Placeholder : à remplacer par le logo footer long (avec trait) -->
+  <text x="10" y="42" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" letter-spacing="2" fill="url(#g)">LIFITNESS</text>
+  <line x1="10" y1="54" x2="300" y2="54" stroke="url(#g)" stroke-width="3"/>
+  <text x="10" y="72" font-family="Arial, Helvetica, sans-serif" font-size="14" letter-spacing="6" fill="#f1ede5">DAKAR</text>
+</svg>
