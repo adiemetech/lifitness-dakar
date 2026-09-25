@@ -1,0 +1,83 @@
+---
+import { Image } from 'astro:assets';
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import Button from '../../components/ui/Button.astro';
+import FinalCTA from '../../components/sections/FinalCTA.astro';
+import { breadcrumbList } from '../../lib/seo';
+import salleImg from '../../assets/images/hero/hero-halteres-miroir.jpg';
+import plateauImg from '../../assets/images/hero/hero-developpe-halteres.png';
+import boutiqueImg from '../../assets/images/boutique/lifitness-bar.png';
+import coachImg from '../../assets/images/coachs/coach-bras-croises.png';
+
+// PLACEHOLDER: gallery to be enriched with real photos of both gyms
+// and short videos provided by the client.
+const photos = [
+  {
+    src: salleImg,
+    alt: 'Lifitness strength floor with dumbbells and mirrors',
+    legende: 'The strength floor, mirror side',
+  },
+  {
+    src: plateauImg,
+    alt: 'Member doing a dumbbell bench press coached by a trainer',
+    legende: 'Dumbbell bench press, coach supervision',
+  },
+  {
+    src: coachImg,
+    alt: 'Lifitness coach with crossed arms in the gym',
+    legende: 'Our coaches are waiting for you from opening time',
+  },
+  {
+    src: boutiqueImg,
+    alt: 'Lifitness bar on a brand background',
+    legende: 'The Lifitness identity: the bar and the brand',
+  },
+];
+---
+
+<PageLayout
+  lang="en"
+  title="Photo gallery — Lifitness Dakar gyms in pictures"
+  description="Step into the Lifitness Dakar atmosphere: strength floors, coaching, boxing ring and premium spaces in Almadies and Sacré-Cœur 3."
+  path="/en/gallery"
+  jsonLd={breadcrumbList([
+    { name: 'Home', path: '/en/' },
+    { name: 'Gallery', path: '/en/gallery' },
+  ])}
+>
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-20 sm:px-6">
+    <SectionHeader
+      eyebrow="Gallery"
+      title="Come and see. Judge for yourself."
+      subtitle="A few images of the Lifitness atmosphere. Nothing beats a visit — the first session is on us."
+    />
+
+    <div class="mt-10 grid gap-6 sm:grid-cols-2">
+      {photos.map((photo) => (
+        <figure class="group overflow-hidden rounded-card border border-white/10 bg-dark-secondary">
+          <Image
+            src={photo.src}
+            alt={photo.alt}
+            width={900}
+            loading="lazy"
+            class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+          />
+          <figcaption class="px-5 py-4 font-mono text-xs text-light-primary/60">
+            {photo.legende}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <div class="mt-12 flex flex-col items-center gap-4 text-center">
+      <p class="max-w-md text-sm text-light-primary/65">
+        The gallery is growing: photos of both gyms, pool, boxing ring and
+        session videos are coming soon.
+      </p>
+      <Button href="/en/free-trial">Book my free trial session</Button>
+    </div>
+  </section>
+
+  <FinalCTA lang="en" />
+</PageLayout>

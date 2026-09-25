@@ -3,6 +3,8 @@ import PageLayout from './PageLayout.astro';
 import Eyebrow from '../components/ui/Eyebrow.astro';
 import FinalCTA from '../components/sections/FinalCTA.astro';
 import { article, breadcrumbList } from '../lib/seo';
+import type { Lang } from '../i18n/ui';
+import { localizedPath } from '../i18n/routes';
 
 export interface Props {
   title: string;
@@ -11,11 +13,21 @@ export interface Props {
   author: string;
   tags?: string[];
   path: string;
+  lang?: Lang;
 }
 
-const { title, description, date, author, tags = [], path } = Astro.props;
+const {
+  title,
+  description,
+  date,
+  author,
+  tags = [],
+  path,
+  lang = 'fr',
+} = Astro.props;
+const en = lang === 'en';
 
-const dateLisible = date.toLocaleDateString('fr-FR', {
+const dateLisible = date.toLocaleDateString(en ? 'en-US' : 'fr-FR', {
   day: 'numeric',
   month: 'long',
   year: 'numeric',
@@ -23,15 +35,26 @@ const dateLisible = date.toLocaleDateString('fr-FR', {
 ---
 
 <PageLayout
-  title={`${title} | Blog Lifitness Dakar`}
+  lang={lang}
+  title={
+    en ? `${title} | Lifitness Dakar Blog` : `${title} | Blog Lifitness Dakar`
+  }
   description={description}
   path={path}
   jsonLd={[
-    breadcrumbList([
-      { name: 'Accueil', path: '/' },
-      { name: 'Blog', path: '/blog' },
-      { name: title, path },
-    ]),
+    breadcrumbList(
+      en
+        ? [
+            { name: 'Home', path: '/en/' },
+            { name: 'Blog', path: '/en/blog' },
+            { name: title, path },
+          ]
+        : [
+            { name: 'Accueil', path: '/' },
+            { name: 'Blog', path: '/blog' },
+            { name: title, path },
+          ],
+    ),
     article({
       title,
       description,
@@ -42,21 +65,21 @@ const dateLisible = date.toLocaleDateString('fr-FR', {
   ]}
 >
   <section class="mx-auto max-w-3xl px-4 pt-16 pb-8 sm:px-6">
-    <nav aria-label="Fil d'Ariane" class="mb-6">
+    <nav aria-label={en ? 'Breadcrumb' : "Fil d'Ariane"} class="mb-6">
       <ol class="flex gap-2 font-mono text-xs text-light-primary/60">
         <li>
-          <a href="/" class="hover:text-brand-pink">
-            Accueil
+          <a href={localizedPath('/', lang)} class="hover:text-brand-pink">
+            {en ? 'Home' : 'Accueil'}
           </a>
         </li>
         <li aria-hidden="true">/</li>
         <li>
-          <a href="/blog" class="hover:text-brand-pink">
+          <a href={localizedPath('/blog', lang)} class="hover:text-brand-pink">
             Blog
           </a>
         </li>
         <li aria-hidden="true">/</li>
-        <li class="text-light-primary">Article</li>
+        <li class="text-light-primary">{en ? 'Article' : 'Article'}</li>
       </ol>
     </nav>
     <Eyebrow>{tags.length > 0 ? tags.join(' · ') : 'Blog'}</Eyebrow>
@@ -71,5 +94,5 @@ const dateLisible = date.toLocaleDateString('fr-FR', {
     <slot />
   </article>
 
-  <FinalCTA />
+  <FinalCTA lang={lang} />
 </PageLayout>
