@@ -1,0 +1,89 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import PricingCard from '../components/ui/PricingCard.astro';
+import FAQAccordion from '../components/ui/FAQAccordion.astro';
+import FinalCTA from '../components/sections/FinalCTA.astro';
+import {
+  formules,
+  fraisInscription,
+  inclusPartout,
+  noteGel,
+} from '../data/tarifs';
+import { breadcrumbList } from '../lib/seo';
+
+const faqTarifs = [
+  {
+    question: 'Les frais d’inscription sont-ils payés une seule fois ?',
+    answer:
+      'Oui. 20 000 FCFA de droit d’entrée, payés une fois à l’inscription, quelle que soit la formule choisie.',
+  },
+  {
+    question: 'Puis-je geler mon abonnement pendant un voyage ?',
+    answer:
+      'Oui, en cas d’absence de plus d’une semaine, sur les forfaits longs (forfait 3 mois et au-delà). Votre échéance est décalée d’autant.',
+  },
+  {
+    question: 'Suis-je engagé sur la durée ?',
+    answer:
+      'Non. La formule Mensuelle se renouvelle mois par mois, sans engagement. Les forfaits 3 mois sont payés d’avance et ouvrent droit au gel d’abonnement.',
+  },
+  {
+    question: 'Que comprend la Carte Confort ?',
+    answer:
+      'Toutes les formules incluent la Carte Confort : un accès illimité aux deux salles (Almadies et Sacré-Cœur 3), quel que soit le jour ou l’heure.',
+  },
+];
+---
+
+<PageLayout
+  title="Tarifs — Dès 30 000 FCFA/mois, 2 salles incluses | Lifitness Dakar"
+  description="Tarifs Lifitness Dakar : inscription unique 20 000 FCFA, mensualité dès 30 000 FCFA, forfait 3 mois 90 000 FCFA, formule BASIC+ avec piscine illimitée. Carte Confort incluse."
+  path="/tarifs"
+  jsonLd={breadcrumbList([
+    { name: 'Accueil', path: '/' },
+    { name: 'Tarifs', path: '/tarifs' },
+  ])}
+>
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-10 sm:px-6">
+    <SectionHeader
+      eyebrow="Tarifs"
+      title="Des prix clairs. Pas de ligne cachée."
+      subtitle="Un droit d'entrée unique, des mensualités simples, et la Carte Confort incluse dans chaque formule : les deux salles, toujours."
+      align="center"
+      class="mx-auto"
+    />
+    <p class="mx-auto mt-8 w-fit rounded-pill border border-brand-amber/40 bg-brand-amber/10 px-5 py-2 font-mono text-sm text-brand-amber">
+      {fraisInscription.label} : {fraisInscription.montant}{' '}
+      {fraisInscription.unite}
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <div class="grid gap-6 md:grid-cols-3">
+      {formules.map((f) => (
+        <PricingCard formule={f} />
+      ))}
+    </div>
+    <ul class="mx-auto mt-10 flex max-w-3xl flex-col items-center gap-2 text-center text-sm text-light-primary/75">
+      {inclusPartout.map((item) => (
+        <li class="flex items-center gap-2">
+          <span class="text-brand-magenta" aria-hidden="true">
+            ✓
+          </span>
+          {item}
+        </li>
+      ))}
+    </ul>
+    <p class="mt-6 text-center text-xs text-light-primary/55">{noteGel}</p>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-20 sm:px-6">
+    <h2 class="mb-6 text-2xl font-bold">
+      Questions de tarif, réponses directes
+    </h2>
+    <FAQAccordion items={faqTarifs} />
+  </section>
+
+  <FinalCTA />
+</PageLayout>

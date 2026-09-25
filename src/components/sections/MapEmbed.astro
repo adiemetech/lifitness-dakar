@@ -1,0 +1,18 @@
+---
+export interface Props {
+  lat: number;
+  lng: number;
+  titre: string;
+}
+
+const { lat, lng, titre } = Astro.props;
+const src = `https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed`;
+---
+
+<iframe
+  src={src}
+  title={`Carte — ${titre}`}
+  loading="lazy"
+  referrerpolicy="no-referrer-when-downgrade"
+  class="aspect-[4/3] w-full rounded-card border border-white/10 grayscale-[35%] contrast-[1.05]"
+></iframe>

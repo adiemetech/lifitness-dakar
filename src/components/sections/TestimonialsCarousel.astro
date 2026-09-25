@@ -1,0 +1,41 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import { avis } from '../../data/avis';
+---
+
+<section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+  <SectionHeader
+    eyebrow="Preuve sociale"
+    title="Ils suent ici. Ils en parlent mieux que nous."
+  />
+  <ul
+    class="-mx-4 mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 sm:mx-0 sm:px-0"
+    aria-label="Témoignages d'adhérents"
+  >
+    {avis.map((a) => (
+      <li class="w-[85%] shrink-0 snap-start sm:w-[46%] lg:w-[31%]">
+        <figure class="flex h-full flex-col gap-4 rounded-card border border-white/10 bg-dark-secondary p-6">
+          <p
+            class="font-mono text-sm text-brand-amber"
+            aria-label={`Note : ${a.note} sur 5`}
+          >
+            {'★'.repeat(a.note)}
+            <span class="text-light-primary/30">{'★'.repeat(5 - a.note)}</span>
+          </p>
+          <blockquote class="text-sm text-light-primary/85 pretty">
+            « {a.texte} »
+          </blockquote>
+          <figcaption class="mt-auto font-mono text-xs tracking-widest text-light-primary/60 uppercase">
+            {a.nom} · {a.quartier}
+          </figcaption>
+        </figure>
+      </li>
+    ))}
+  </ul>
+  <p class="mt-2 text-xs text-light-primary/50">
+    Faites défiler pour lire plus d'avis ·
+    <a href="/avis" class="text-brand-cyan hover:underline">
+      tous les avis
+    </a>
+  </p>
+</section>

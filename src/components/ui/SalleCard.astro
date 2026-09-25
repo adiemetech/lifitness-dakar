@@ -1,0 +1,33 @@
+---
+import type { Salle } from '../../data/salles';
+import { telHref } from '../../data/salles';
+import Card from './Card.astro';
+import Button from './Button.astro';
+
+export interface Props {
+  salle: Salle;
+}
+
+const { salle } = Astro.props;
+---
+
+<Card class="flex h-full flex-col gap-4">
+  <div>
+    <h3 class="text-2xl font-bold">{salle.nom}</h3>
+    <p class="mt-1 text-sm text-light-primary/70">
+      {salle.adresse} · {salle.complement}
+    </p>
+  </div>
+  <p class="text-sm text-light-primary/80 pretty">{salle.description}</p>
+  <div class="mt-auto flex flex-wrap items-center gap-4 pt-2">
+    <Button href={`/salles/${salle.slug}`} size="sm">
+      Voir la salle
+    </Button>
+    <a
+      href={telHref(salle)}
+      class="font-mono text-sm text-brand-cyan transition hover:text-brand-pink"
+    >
+      {salle.telephone}
+    </a>
+  </div>
+</Card>

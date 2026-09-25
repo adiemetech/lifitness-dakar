@@ -1,0 +1,55 @@
+---
+import type { Formule } from '../../data/tarifs';
+
+export interface Props {
+  formule: Formule;
+}
+
+const { formule } = Astro.props;
+---
+
+<div
+  class:list={[
+    'relative flex h-full flex-col gap-5 rounded-card border p-7',
+    formule.highlight
+      ? 'border-brand-magenta bg-dark-secondary shadow-xl shadow-brand-magenta/15'
+      : 'border-white/10 bg-dark-secondary',
+  ]}
+>
+  {formule.highlight && (
+    <p class="absolute -top-3 left-7 rounded-pill bg-gradient-brand px-3 py-1 font-mono text-xs tracking-widest text-white uppercase">
+      Le plus choisi
+    </p>
+  )}
+  <div>
+    <h3 class="text-xl font-bold">{formule.nom}</h3>
+    <p class="mt-1 text-sm text-light-primary/70">{formule.description}</p>
+  </div>
+  <p class="font-display">
+    <span class="text-4xl font-bold">{formule.prix}</span>
+    <span class="ml-2 font-mono text-sm text-light-primary/60">
+      {formule.unite}
+    </span>
+  </p>
+  <ul class="flex flex-col gap-2 text-sm text-light-primary/80">
+    {formule.features.map((f) => (
+      <li class="flex gap-2">
+        <span class="text-brand-magenta" aria-hidden="true">
+          ✓
+        </span>
+        {f}
+      </li>
+    ))}
+  </ul>
+  <a
+    href="/essai-gratuit"
+    class:list={[
+      'mt-auto inline-flex items-center justify-center rounded-pill px-6 py-3 text-sm font-semibold transition',
+      formule.highlight
+        ? 'bg-gradient-brand text-white hover:brightness-110'
+        : 'border border-white/25 hover:border-brand-magenta hover:text-brand-pink',
+    ]}
+  >
+    Commencer par une séance offerte
+  </a>
+</div>

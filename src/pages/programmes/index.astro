@@ -1,0 +1,43 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import ProgrammeCard from '../../components/ui/ProgrammeCard.astro';
+import FinalCTA from '../../components/sections/FinalCTA.astro';
+import Button from '../../components/ui/Button.astro';
+import { programmes } from '../../data/programmes';
+import { breadcrumbList } from '../../lib/seo';
+---
+
+<PageLayout
+  title="Programmes — Musculation, boxe, EMS, aquatique | Lifitness Dakar"
+  description="Tous les programmes Lifitness Dakar : musculation, cardio, crossfit, TRX, boxe, EMS, cours collectifs Les Mills, aquagym, aquabike et sauna, aux Almadies et à Sacré-Cœur 3."
+  path="/programmes"
+  jsonLd={breadcrumbList([
+    { name: 'Accueil', path: '/' },
+    { name: 'Programmes', path: '/programmes' },
+  ])}
+>
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-10 sm:px-6">
+    <SectionHeader
+      eyebrow="Programmes"
+      title="Neuf terrains de jeu. Un seul badge."
+      subtitle="Chaque programme est encadré par des coachs présents dès l'ouverture, dans les deux salles. Choisissez votre combat — ou combinez-les tous."
+    />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {programmes.map((p) => (
+        <ProgrammeCard programme={p} />
+      ))}
+    </div>
+    <div class="mt-12 flex flex-wrap gap-4">
+      <Button href="/planning">Voir le planning</Button>
+      <Button href="/tarifs" variant="outline">
+        Voir les tarifs
+      </Button>
+    </div>
+  </section>
+
+  <FinalCTA />
+</PageLayout>

@@ -1,0 +1,28 @@
+---
+import type { Programme } from '../../data/programmes';
+import Card from './Card.astro';
+
+export interface Props {
+  programme: Programme;
+}
+
+const { programme } = Astro.props;
+---
+
+<Card class="flex h-full flex-col gap-3">
+  <p class="font-mono text-xs tracking-[0.25em] uppercase">
+    <span class={programme.accent}>{programme.categorie}</span>
+  </p>
+  <h3 class="text-xl font-bold">{programme.nom}</h3>
+  <p class="text-sm text-light-primary/70 pretty">{programme.accroche}</p>
+  <a
+    href={`/programmes/${programme.slug}`}
+    class:list={[
+      'mt-auto inline-flex items-center gap-2 pt-2 text-sm font-semibold transition hover:gap-3',
+      programme.accent,
+    ]}
+  >
+    Découvrir
+    <span aria-hidden="true">→</span>
+  </a>
+</Card>

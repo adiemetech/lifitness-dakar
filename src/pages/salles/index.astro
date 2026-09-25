@@ -1,0 +1,42 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import SalleCard from '../../components/ui/SalleCard.astro';
+import StatBlock from '../../components/ui/StatBlock.astro';
+import FinalCTA from '../../components/sections/FinalCTA.astro';
+import { salles } from '../../data/salles';
+import { breadcrumbList } from '../../lib/seo';
+---
+
+<PageLayout
+  title="Nos 2 salles à Dakar — Almadies & Sacré-Cœur | Lifitness"
+  description="Lifitness Almadies (Corniche Ouest) et Lifitness Sacré-Cœur 3 (derrière Auchan) : un seul abonnement, accès illimité aux deux salles via la Carte Confort."
+  path="/salles"
+  jsonLd={breadcrumbList([
+    { name: 'Accueil', path: '/' },
+    { name: 'Salles', path: '/salles' },
+  ])}
+>
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-10 sm:px-6">
+    <SectionHeader
+      eyebrow="Nos salles"
+      title="Deux adresses. Une seule carte."
+      subtitle="La Carte Confort vous ouvre les deux salles sans restriction. Entraînez-vous près de chez vous, de votre bureau, ou de votre humeur du jour."
+    />
+    <div class="mt-10 grid gap-8 sm:grid-cols-3">
+      <StatBlock valeur="2" label="Salles à Dakar" />
+      <StatBlock valeur="1" label="Abonnement unique" />
+      <StatBlock valeur="16h" label="D'ouverture par jour en semaine" />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+    <div class="grid gap-6 md:grid-cols-2">
+      {salles.map((salle) => (
+        <SalleCard salle={salle} />
+      ))}
+    </div>
+  </section>
+
+  <FinalCTA />
+</PageLayout>

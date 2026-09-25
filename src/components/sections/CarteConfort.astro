@@ -1,0 +1,49 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import Card from '../ui/Card.astro';
+import Button from '../ui/Button.astro';
+
+const piliers = [
+  {
+    numero: '01',
+    couleur: 'text-brand-amber',
+    titre: 'Accès illimité aux 2 salles',
+    texte:
+      'Almadies ou Sacré-Cœur 3 : badgez, entrez, entraînez-vous. Aucune restriction de lieu ni de créneau.',
+  },
+  {
+    numero: '02',
+    couleur: 'text-brand-magenta',
+    titre: 'Tous les espaces inclus',
+    texte:
+      'Plateaux complets, ring, piscine, sauna et cours collectifs Les Mills : tout est dans votre formule.',
+  },
+  {
+    numero: '03',
+    couleur: 'text-brand-cyan',
+    titre: 'Coachs présents dès l’ouverture',
+    texte:
+      'De 7h à 23h en semaine, un coach est là pour vous cadrer, vous corriger et vous pousser.',
+  },
+];
+---
+
+<section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+  <SectionHeader
+    eyebrow="Carte Confort"
+    title="Un abonnement. Deux salles. Zéro frontière."
+    subtitle="Votre Carte Confort ouvre les portes des Almadies et de Sacré-Cœur 3, peu importe le jour, peu importe l'heure. Entraînez-vous là où vous voulez, quand vous voulez."
+  />
+  <div class="mt-10 grid gap-6 md:grid-cols-3">
+    {piliers.map((p) => (
+      <Card>
+        <p class:list={['font-mono text-3xl', p.couleur]}>{p.numero}</p>
+        <h3 class="mt-3 text-xl font-bold">{p.titre}</h3>
+        <p class="mt-2 text-sm text-light-primary/70">{p.texte}</p>
+      </Card>
+    ))}
+  </div>
+  <div class="mt-10">
+    <Button href="/carte-confort">Découvrir la Carte Confort</Button>
+  </div>
+</section>
