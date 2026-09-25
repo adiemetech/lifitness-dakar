@@ -1,0 +1,78 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Eyebrow from '../../components/ui/Eyebrow.astro';
+import EssaiForm from '../../components/forms/EssaiForm.astro';
+import Card from '../../components/ui/Card.astro';
+import { breadcrumbList } from '../../lib/seo';
+
+const steps = [
+  {
+    numero: '1',
+    titre: 'You book in 60 seconds',
+    texte:
+      'Fill in the form: your request opens pre-filled on WhatsApp, with an email copy if you prefer.',
+  },
+  {
+    numero: '2',
+    titre: 'We call you back to set the slot',
+    texte:
+      'A coach confirms the time, the gym and your goal. No upfront payment, no credit card.',
+  },
+  {
+    numero: '3',
+    titre: 'You try everything, for free',
+    texte:
+      'Guided tour, full session on the floors or in a group class. You decide afterwards, with zero pressure.',
+  },
+];
+---
+
+<PageLayout
+  lang="en"
+  title="Free Trial — First Session on Us | Lifitness Dakar"
+  description="Book your free trial session at Lifitness Dakar: guided tour, full access to the floors and group classes, no commitment, in Almadies or Sacré-Cœur 3."
+  path="/en/free-trial"
+  jsonLd={breadcrumbList([
+    { name: 'Home', path: '/en/' },
+    { name: 'Free trial', path: '/en/free-trial' },
+  ])}
+>
+  <section class="bg-gradient-brand">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <div class="flex max-w-2xl flex-col items-start gap-5">
+        <Eyebrow class="text-white/85">Free trial session</Eyebrow>
+        <h1 class="text-4xl font-bold text-white text-balance sm:text-5xl">
+          Try before you commit. That's all we ask.
+        </h1>
+        <p class="text-lg text-white/90 pretty">
+          First session free, guided tour included, at the gym of your choice.
+          Fill in the form: we take care of the rest.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <ol class="grid gap-6 md:grid-cols-3">
+      {steps.map((e) => (
+        <li>
+          <Card class="h-full">
+            <p class="font-mono text-3xl text-brand-magenta">{e.numero}</p>
+            <h2 class="mt-3 text-lg font-bold">{e.titre}</h2>
+            <p class="mt-2 text-sm text-light-primary/70">{e.texte}</p>
+          </Card>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-20 sm:px-6">
+    <div class="rounded-card border border-white/10 bg-dark-secondary p-7 sm:p-10">
+      <h2 class="text-2xl font-bold">Book your session</h2>
+      <p class="mt-2 mb-8 text-sm text-light-primary/70">
+        Memberships are signed on site, after your trial. Not before.
+      </p>
+      <EssaiForm lang="en" />
+    </div>
+  </section>
+</PageLayout>

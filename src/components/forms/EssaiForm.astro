@@ -1,19 +1,36 @@
 ---
-import { sallesLabels, objectifsLabels, niveauxLabels } from '../../lib/form';
+import {
+  sallesLabels,
+  objectifsLabels,
+  objectifsLabelsEn,
+  niveauxLabels,
+  niveauxLabelsEn,
+} from '../../lib/form';
 import { SITE_EMAIL } from '../../lib/seo';
+import type { Lang } from '../../i18n/ui';
+
+export interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'fr' } = Astro.props;
+const en = lang === 'en';
 
 const inputClass =
   'w-full rounded-card border border-white/15 bg-dark-primary px-4 py-3 text-sm text-light-primary placeholder:text-light-primary/40 focus:border-brand-magenta focus:outline-none';
 const labelClass =
   'mb-1 block font-mono text-xs tracking-widest uppercase text-light-primary/70';
 const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
+
+const objectifs = en ? objectifsLabelsEn : objectifsLabels;
+const niveaux = en ? niveauxLabelsEn : niveauxLabels;
 ---
 
-<form data-essai-form class="flex flex-col gap-5" novalidate>
+<form data-essai-form data-lang={lang} class="flex flex-col gap-5" novalidate>
   <div class="grid gap-5 sm:grid-cols-2">
     <div>
       <label for="essai-nom" class={labelClass}>
-        Nom *
+        {en ? 'Name *' : 'Nom *'}
       </label>
       <input
         id="essai-nom"
@@ -28,7 +45,7 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
     </div>
     <div>
       <label for="essai-tel" class={labelClass}>
-        Téléphone *
+        {en ? 'Phone *' : 'Téléphone *'}
       </label>
       <input
         id="essai-tel"
@@ -46,7 +63,7 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
   <div class="grid gap-5 sm:grid-cols-2">
     <div>
       <label for="essai-email" class={labelClass}>
-        Email (optionnel)
+        {en ? 'Email (optional)' : 'Email (optionnel)'}
       </label>
       <input
         id="essai-email"
@@ -54,13 +71,13 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
         type="email"
         autocomplete="email"
         class={inputClass}
-        placeholder="vous@exemple.com"
+        placeholder={en ? 'you@example.com' : 'vous@exemple.com'}
       />
       <p data-error="email" class={errorClass}></p>
     </div>
     <div>
       <label for="essai-salle" class={labelClass}>
-        Quelle salle ? *
+        {en ? 'Which gym? *' : 'Quelle salle ? *'}
       </label>
       <select id="essai-salle" name="salle" required class={inputClass}>
         {Object.entries(sallesLabels).map(([value, label]) => (
@@ -74,10 +91,10 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
   <div class="grid gap-5 sm:grid-cols-2">
     <div>
       <label for="essai-objectif" class={labelClass}>
-        Votre objectif *
+        {en ? 'Your goal *' : 'Votre objectif *'}
       </label>
       <select id="essai-objectif" name="objectif" required class={inputClass}>
-        {Object.entries(objectifsLabels).map(([value, label]) => (
+        {Object.entries(objectifs).map(([value, label]) => (
           <option value={value}>{label}</option>
         ))}
       </select>
@@ -85,10 +102,10 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
     </div>
     <div>
       <label for="essai-niveau" class={labelClass}>
-        Votre niveau *
+        {en ? 'Your level *' : 'Votre niveau *'}
       </label>
       <select id="essai-niveau" name="niveau" required class={inputClass}>
-        {Object.entries(niveauxLabels).map(([value, label]) => (
+        {Object.entries(niveaux).map(([value, label]) => (
           <option value={value}>{label}</option>
         ))}
       </select>
@@ -98,14 +115,18 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
 
   <div>
     <label for="essai-message" class={labelClass}>
-      Message libre
+      {en ? 'Free message' : 'Message libre'}
     </label>
     <textarea
       id="essai-message"
       name="message"
       rows="4"
       class={inputClass}
-      placeholder="Créneaux préférés, questions, antécédents…"
+      placeholder={
+        en
+          ? 'Preferred time slots, questions, medical history…'
+          : 'Créneaux préférés, questions, antécédents…'
+      }
     ></textarea>
     <p data-error="message" class={errorClass}></p>
   </div>
@@ -114,11 +135,20 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
     type="submit"
     class="rounded-pill bg-gradient-brand px-8 py-4 text-base font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-110"
   >
-    Envoyer ma demande d'essai gratuit
+    {en ? 'Send my free trial request' : "Envoyer ma demande d'essai gratuit"}
   </button>
   <p class="text-xs text-light-primary/55">
-    * Champs obligatoires. Votre demande part sur WhatsApp prérempli ; une copie
-    email vers {SITE_EMAIL} est proposée à la confirmation.
+    {en ? (
+      <>
+        * Required fields. Your request opens pre-filled in WhatsApp; an email
+        copy to {SITE_EMAIL} is offered at confirmation.
+      </>
+    ) : (
+      <>
+        * Champs obligatoires. Votre demande part sur WhatsApp prérempli ; une
+        copie email vers {SITE_EMAIL} est proposée à la confirmation.
+      </>
+    )}
   </p>
 
   <div
@@ -127,11 +157,14 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
     role="status"
   >
     <p class="font-semibold text-brand-cyan">
-      Merci ! Votre message est prêt à partir.
+      {en
+        ? 'Thank you! Your message is ready to send.'
+        : 'Merci ! Votre message est prêt à partir.'}
     </p>
     <p class="text-sm text-light-primary/80">
-      WhatsApp s'est ouvert avec votre demande préremplie. Si ce n'est pas le
-      cas, utilisez les boutons ci-dessous.
+      {en
+        ? "WhatsApp opened with your pre-filled request. If it didn't, use the buttons below."
+        : "WhatsApp s'est ouvert avec votre demande préremplie. Si ce n'est pas le cas, utilisez les boutons ci-dessous."}
     </p>
     <div class="flex flex-wrap gap-3">
       <a
@@ -141,34 +174,40 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
         rel="noopener"
         class="rounded-pill bg-[#25D366] px-5 py-2.5 text-sm font-semibold text-white"
       >
-        Ouvrir WhatsApp
+        {en ? 'Open WhatsApp' : 'Ouvrir WhatsApp'}
       </a>
       <a
         data-success-mailto
         href="#"
         class="rounded-pill border border-white/25 px-5 py-2.5 text-sm font-semibold"
       >
-        Envoyer par email
+        {en ? 'Send by email' : 'Envoyer par email'}
       </a>
       <button
         type="button"
         data-success-copy
         class="rounded-pill border border-white/25 px-5 py-2.5 text-sm font-semibold"
       >
-        Copier le message
+        {en ? 'Copy message' : 'Copier le message'}
       </button>
     </div>
   </div>
 </form>
 
 <script>
-  import { essaiSchema, buildEssaiMessage } from '../../lib/form';
+  import {
+    essaiSchema,
+    essaiSchemaEn,
+    buildEssaiMessage,
+  } from '../../lib/form';
   import { whatsappUrl } from '../../lib/whatsapp';
   import { SITE_EMAIL } from '../../lib/seo';
   import { trackEvent, EVENTS } from '../../lib/analytics';
 
   const form = document.querySelector<HTMLFormElement>('[data-essai-form]');
   if (form) {
+    const lang = form.dataset.lang === 'en' ? 'en' : 'fr';
+    const schema = lang === 'en' ? essaiSchemaEn : essaiSchema;
     const success = form.querySelector<HTMLElement>('[data-essai-success]');
     const waLink = form.querySelector<HTMLAnchorElement>(
       '[data-success-whatsapp]',
@@ -190,7 +229,7 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
       event.preventDefault();
       clearErrors();
       const data = Object.fromEntries(new FormData(form).entries());
-      const result = essaiSchema.safeParse(data);
+      const result = schema.safeParse(data);
       if (!result.success) {
         for (const issue of result.error.issues) {
           const field = String(issue.path[0]);
@@ -204,11 +243,11 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
         }
         return;
       }
-      const message = buildEssaiMessage(result.data);
+      const message = buildEssaiMessage(result.data, lang);
       const waUrl = whatsappUrl(message);
       if (waLink) waLink.href = waUrl;
       if (mailtoLink)
-        mailtoLink.href = `mailto:${SITE_EMAIL}?subject=${encodeURIComponent("Demande d'essai gratuit — " + result.data.nom)}&body=${encodeURIComponent(message)}`;
+        mailtoLink.href = `mailto:${SITE_EMAIL}?subject=${encodeURIComponent((lang === 'en' ? 'Free trial request — ' : "Demande d'essai gratuit — ") + result.data.nom)}&body=${encodeURIComponent(message)}`;
       copyBtn?.addEventListener('click', () =>
         navigator.clipboard.writeText(message),
       );

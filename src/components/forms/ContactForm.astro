@@ -1,6 +1,14 @@
 ---
 import { sallesLabels } from '../../lib/form';
 import { SITE_EMAIL } from '../../lib/seo';
+import type { Lang } from '../../i18n/ui';
+
+export interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'fr' } = Astro.props;
+const en = lang === 'en';
 
 const inputClass =
   'w-full rounded-card border border-white/15 bg-dark-primary px-4 py-3 text-sm text-light-primary placeholder:text-light-primary/40 focus:border-brand-magenta focus:outline-none';
@@ -9,11 +17,11 @@ const labelClass =
 const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
 ---
 
-<form data-contact-form class="flex flex-col gap-5" novalidate>
+<form data-contact-form data-lang={lang} class="flex flex-col gap-5" novalidate>
   <div class="grid gap-5 sm:grid-cols-2">
     <div>
       <label for="contact-nom" class={labelClass}>
-        Nom *
+        {en ? 'Name *' : 'Nom *'}
       </label>
       <input
         id="contact-nom"
@@ -28,7 +36,7 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
     </div>
     <div>
       <label for="contact-tel" class={labelClass}>
-        Téléphone *
+        {en ? 'Phone *' : 'Téléphone *'}
       </label>
       <input
         id="contact-tel"
@@ -46,7 +54,7 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
   <div class="grid gap-5 sm:grid-cols-2">
     <div>
       <label for="contact-email" class={labelClass}>
-        Email (optionnel)
+        {en ? 'Email (optional)' : 'Email (optionnel)'}
       </label>
       <input
         id="contact-email"
@@ -54,13 +62,13 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
         type="email"
         autocomplete="email"
         class={inputClass}
-        placeholder="vous@exemple.com"
+        placeholder={en ? 'you@example.com' : 'vous@exemple.com'}
       />
       <p data-error="email" class={errorClass}></p>
     </div>
     <div>
       <label for="contact-salle" class={labelClass}>
-        Quelle salle ? *
+        {en ? 'Which gym? *' : 'Quelle salle ? *'}
       </label>
       <select id="contact-salle" name="salle" required class={inputClass}>
         {Object.entries(sallesLabels).map(([value, label]) => (
@@ -81,7 +89,9 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
       rows="5"
       required
       class={inputClass}
-      placeholder="Votre question, votre besoin…"
+      placeholder={
+        en ? 'Your question, what you need…' : 'Votre question, votre besoin…'
+      }
     ></textarea>
     <p data-error="message" class={errorClass}></p>
   </div>
@@ -90,11 +100,20 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
     type="submit"
     class="rounded-pill bg-gradient-brand px-8 py-4 text-base font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-110"
   >
-    Envoyer le message
+    {en ? 'Send message' : 'Envoyer le message'}
   </button>
   <p class="text-xs text-light-primary/55">
-    * Champs obligatoires. Envoi via WhatsApp prérempli, copie email vers
-    {SITE_EMAIL} proposée à la confirmation.
+    {en ? (
+      <>
+        * Required fields. Sent via pre-filled WhatsApp, email copy to
+        {SITE_EMAIL} offered at confirmation.
+      </>
+    ) : (
+      <>
+        * Champs obligatoires. Envoi via WhatsApp prérempli, copie email vers
+        {SITE_EMAIL} proposée à la confirmation.
+      </>
+    )}
   </p>
 
   <div
@@ -102,7 +121,9 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
     class="hidden flex-col gap-4 rounded-card border border-brand-cyan/40 bg-brand-cyan/10 p-6"
     role="status"
   >
-    <p class="font-semibold text-brand-cyan">Message prêt à partir.</p>
+    <p class="font-semibold text-brand-cyan">
+      {en ? 'Message ready to send.' : 'Message prêt à partir.'}
+    </p>
     <div class="flex flex-wrap gap-3">
       <a
         data-success-whatsapp
@@ -111,34 +132,40 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
         rel="noopener"
         class="rounded-pill bg-[#25D366] px-5 py-2.5 text-sm font-semibold text-white"
       >
-        Ouvrir WhatsApp
+        {en ? 'Open WhatsApp' : 'Ouvrir WhatsApp'}
       </a>
       <a
         data-success-mailto
         href="#"
         class="rounded-pill border border-white/25 px-5 py-2.5 text-sm font-semibold"
       >
-        Envoyer par email
+        {en ? 'Send by email' : 'Envoyer par email'}
       </a>
       <button
         type="button"
         data-success-copy
         class="rounded-pill border border-white/25 px-5 py-2.5 text-sm font-semibold"
       >
-        Copier le message
+        {en ? 'Copy message' : 'Copier le message'}
       </button>
     </div>
   </div>
 </form>
 
 <script>
-  import { contactSchema, buildContactMessage } from '../../lib/form';
+  import {
+    contactSchema,
+    contactSchemaEn,
+    buildContactMessage,
+  } from '../../lib/form';
   import { whatsappUrl } from '../../lib/whatsapp';
   import { SITE_EMAIL } from '../../lib/seo';
   import { trackEvent, EVENTS } from '../../lib/analytics';
 
   const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
   if (form) {
+    const lang = form.dataset.lang === 'en' ? 'en' : 'fr';
+    const schema = lang === 'en' ? contactSchemaEn : contactSchema;
     const success = form.querySelector<HTMLElement>('[data-contact-success]');
     const waLink = form.querySelector<HTMLAnchorElement>(
       '[data-success-whatsapp]',
@@ -160,7 +187,7 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
       event.preventDefault();
       clearErrors();
       const data = Object.fromEntries(new FormData(form).entries());
-      const result = contactSchema.safeParse(data);
+      const result = schema.safeParse(data);
       if (!result.success) {
         for (const issue of result.error.issues) {
           const field = String(issue.path[0]);
@@ -174,7 +201,7 @@ const errorClass = 'mt-1 hidden font-mono text-xs text-brand-orange';
         }
         return;
       }
-      const message = buildContactMessage(result.data);
+      const message = buildContactMessage(result.data, lang);
       const waUrl = whatsappUrl(message);
       if (waLink) waLink.href = waUrl;
       if (mailtoLink)

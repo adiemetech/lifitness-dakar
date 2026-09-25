@@ -1,0 +1,56 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import CoachCard from '../../components/ui/CoachCard.astro';
+import Button from '../../components/ui/Button.astro';
+import FinalCTA from '../../components/sections/FinalCTA.astro';
+import { coachsEn } from '../../data/en/coachs';
+import { breadcrumbList } from '../../lib/seo';
+---
+
+<PageLayout
+  lang="en"
+  title="Coaches — A team on the floor from opening | Lifitness Dakar"
+  description="The Lifitness Dakar team: certified strength, boxing coaches and lifeguards, present from opening time in both gyms to guide your training."
+  path="/en/coaches"
+  jsonLd={breadcrumbList([
+    { name: 'Home', path: '/en/' },
+    { name: 'Coaches', path: '/en/coaches' },
+  ])}
+>
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-10 sm:px-6">
+    <SectionHeader
+      eyebrow="The team"
+      title="Coaches who show up. Not floor supervisors."
+      subtitle="From opening, a coach circulates on the floors, supervises the ring and secures the pool. Your technique improves, your injuries stay in the locker room."
+    />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {coachsEn.map((coach) => (
+        <CoachCard coach={coach} lang="en" />
+      ))}
+    </div>
+    <p class="mt-6 text-xs text-light-primary/55">
+      Team being finalized — definitive portraits and bios coming soon.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+    <div class="flex flex-col items-start gap-4 rounded-card border border-white/10 bg-dark-secondary p-8 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h2 class="text-xl font-bold">Want to coach at Lifitness?</h2>
+        <p class="mt-1 text-sm text-light-primary/70">
+          Certified, passionate, demanding: write to us — we review every
+          application.
+        </p>
+      </div>
+      <Button href="/en/contact" variant="outline">
+        Apply
+      </Button>
+    </div>
+  </section>
+
+  <FinalCTA lang="en" />
+</PageLayout>
