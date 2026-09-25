@@ -1,0 +1,148 @@
+/* Animations — activées uniquement si JS dispo (html[data-anim])
+   et désactivées si l'utilisateur préfère moins de mouvement. */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes shine-sweep {
+  from {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  to {
+    transform: translateX(250%) skewX(-20deg);
+  }
+}
+
+@keyframes gradient-pan {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 200% 50%;
+  }
+}
+
+/* Scroll-reveal : état masqué appliqué seulement quand le script est actif */
+html[data-anim] [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+html[data-anim] [data-reveal].revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Cascades : les cartes d'une grille révélée montent l'une après l'autre */
+html[data-anim] [data-reveal].revealed .grid > * {
+  animation: rise-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+html[data-anim] [data-reveal].revealed .grid > *:nth-child(2) {
+  animation-delay: 90ms;
+}
+html[data-anim] [data-reveal].revealed .grid > *:nth-child(3) {
+  animation-delay: 180ms;
+}
+html[data-anim] [data-reveal].revealed .grid > *:nth-child(4) {
+  animation-delay: 270ms;
+}
+html[data-anim] [data-reveal].revealed .grid > *:nth-child(n + 5) {
+  animation-delay: 360ms;
+}
+
+/* Hero : lignes qui montent au chargement */
+@utility animate-hero-rise {
+  animation: hero-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--rise-delay, 0ms);
+}
+
+/* Hero : cascade automatique sur les enfants du conteneur */
+[data-hero-stagger] > * {
+  animation: hero-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+[data-hero-stagger] > *:nth-child(2) {
+  animation-delay: 120ms;
+}
+[data-hero-stagger] > *:nth-child(3) {
+  animation-delay: 240ms;
+}
+[data-hero-stagger] > *:nth-child(4) {
+  animation-delay: 360ms;
+}
+[data-hero-stagger] > *:nth-child(n + 5) {
+  animation-delay: 480ms;
+}
+
+/* Gradient animé (bandeaux CTA) */
+@utility animate-gradient {
+  background-size: 200% 100%;
+  animation: gradient-pan 8s linear infinite alternate;
+}
+
+/* Shine au survol des boutons primaires */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 40%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 0.35),
+    transparent
+  );
+  transform: translateX(-150%) skewX(-20deg);
+  pointer-events: none;
+}
+.btn-shine:hover::after {
+  animation: shine-sweep 0.9s ease;
+}
+
+/* Accèsibilité : aucun mouvement si l'utilisateur le refuse */
+@media (prefers-reduced-motion: reduce) {
+  html[data-anim] [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  html[data-anim] [data-reveal].revealed .grid > * {
+    animation: none;
+  }
+  .animate-hero-rise,
+  .animate-gradient,
+  [data-hero-stagger] > * {
+    animation: none;
+  }
+  .btn-shine:hover::after {
+    animation: none;
+  }
+}

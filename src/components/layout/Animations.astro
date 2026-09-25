@@ -1,0 +1,107 @@
+<script>
+  // Scroll-reveal, parallaxe légère et compteurs animés.
+  // Réinitialisé à chaque navigation (ClientRouter → astro:page-load).
+  const reduceMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)',
+  ).matches;
+  const finePointer = window.matchMedia('(pointer: fine)').matches;
+
+  let parallaxElements: HTMLElement[] = [];
+  let scrollBound = false;
+
+  const updateParallax = () => {
+    for (const el of parallaxElements) {
+      const rect = el.getBoundingClientRect();
+      if (rect.bottom < 0 || rect.top > window.innerHeight) continue;
+      const center = rect.top + rect.height / 2 - window.innerHeight / 2;
+      el.style.transform = `translateY(${(-center * 0.1).toFixed(1)}px) scale(1.08)`;
+    }
+  };
+
+  const initReveal = () => {
+    const sections = document.querySelectorAll<HTMLElement>(
+      'main > section:not([data-hero]):not([data-no-reveal])',
+    );
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -5% 0px' },
+    );
+    sections.forEach((section) => {
+      section.dataset.reveal = '';
+      observer.observe(section);
+    });
+  };
+
+  const initParallax = () => {
+    parallaxElements = [
+      ...document.querySelectorAll<HTMLElement>('[data-parallax]'),
+    ];
+    if (parallaxElements.length === 0) return;
+    updateParallax();
+    if (!scrollBound) {
+      let ticking = false;
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(() => {
+            updateParallax();
+            ticking = false;
+          });
+        },
+        { passive: true },
+      );
+      scrollBound = true;
+    }
+  };
+
+  const initCounters = () => {
+    const counters = document.querySelectorAll<HTMLElement>('[data-count]');
+    if (counters.length === 0) return;
+    const animate = (el: HTMLElement) => {
+      const match = el.textContent?.trim().match(/^(\d+)(.*)$/s);
+      if (!match) return;
+      const target = Number(match[1]);
+      const suffix = match[2];
+      const duration = 1200;
+      const start = performance.now();
+      const step = (now: number) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = `${Math.round(target * eased)}${suffix}`;
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            animate(entry.target as HTMLElement);
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.4 },
+    );
+    counters.forEach((c) => observer.observe(c));
+  };
+
+  const initAnimations = () => {
+    if (reduceMotion) return;
+    document.documentElement.dataset.anim = '';
+    initReveal();
+    if (finePointer) initParallax();
+    initCounters();
+  };
+
+  document.addEventListener('astro:page-load', initAnimations);
+</script>

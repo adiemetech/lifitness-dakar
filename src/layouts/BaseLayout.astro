@@ -1,6 +1,8 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import Analytics from '../components/layout/Analytics.astro';
+import Animations from '../components/layout/Animations.astro';
 
 export interface Props {
   title: string;
@@ -39,8 +41,10 @@ const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
       <script type="application/ld+json" set:html={JSON.stringify(block)} />
     ))}
     <Analytics />
+    <ClientRouter />
   </head>
   <body class="bg-dark-primary font-sans text-light-primary antialiased">
     <slot />
+    <Animations />
   </body>
 </html>

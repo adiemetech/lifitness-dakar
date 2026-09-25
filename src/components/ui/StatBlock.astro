@@ -8,7 +8,9 @@ const { valeur, label } = Astro.props;
 ---
 
 <div class="flex flex-col gap-1">
-  <p class="font-display text-4xl font-bold text-gradient">{valeur}</p>
+  <p class="font-display text-4xl font-bold text-gradient">
+    <span data-count>{valeur}</span>
+  </p>
   <p class="font-mono text-xs tracking-[0.2em] text-light-primary/60 uppercase">
     {label}
   </p>
