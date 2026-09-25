@@ -1,0 +1,131 @@
+---
+import { mainNav, secondaryNav } from '../../data/navigation';
+import { salles, telHref } from '../../data/salles';
+import { horaires } from '../../data/horaires';
+import Button from '../ui/Button.astro';
+---
+
+<div
+  id="mobile-drawer"
+  data-drawer
+  class="fixed inset-0 z-50 invisible lg:hidden"
+  aria-hidden="true"
+>
+  <div
+    data-drawer-overlay
+    class="absolute inset-0 bg-black/70 opacity-0 transition-opacity duration-300"
+  ></div>
+  <div
+    data-drawer-panel
+    class="absolute inset-y-0 right-0 flex w-[85%] max-w-sm translate-x-full flex-col overflow-y-auto border-l border-white/10 bg-dark-secondary p-6 transition-transform duration-300 ease-out"
+  >
+    <div class="mb-8 flex items-center justify-between">
+      <p class="font-mono text-xs tracking-[0.3em] text-brand-cyan uppercase">
+        Menu
+      </p>
+      <button
+        type="button"
+        data-drawer-close
+        class="grid size-10 place-items-center rounded-card border border-white/15 transition hover:border-brand-magenta"
+      >
+        <span class="sr-only">Fermer le menu</span>
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+    </div>
+
+    <nav aria-label="Navigation mobile">
+      <ul class="flex flex-col gap-1">
+        {mainNav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              data-drawer-close
+              class="block rounded-card px-3 py-3 text-lg font-semibold transition hover:bg-white/5 hover:text-brand-pink"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <ul class="mt-4 flex flex-col gap-1 border-t border-white/10 pt-4">
+        {secondaryNav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              data-drawer-close
+              class="block rounded-card px-3 py-2 text-sm text-light-primary/70 transition hover:text-white"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="mt-auto flex flex-col gap-4 pt-8">
+      <Button href="/essai-gratuit" class="w-full" data-drawer-close>
+        Réserver ma séance d'essai gratuite
+      </Button>
+      <div class="flex flex-col gap-2 text-sm text-light-primary/70">
+        {salles.map((salle) => (
+          <a
+            href={telHref(salle)}
+            class="font-mono transition hover:text-brand-pink"
+          >
+            {salle.nom} · {salle.telephone}
+          </a>
+        ))}
+        {horaires.map((c) => (
+          <p>
+            {c.label} : {c.opens.replace(':', 'h')} –{' '}
+            {c.closes.replace(':', 'h')}
+          </p>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const drawer = document.querySelector<HTMLElement>('[data-drawer]');
+  const overlay = drawer?.querySelector<HTMLElement>('[data-drawer-overlay]');
+  const panel = drawer?.querySelector<HTMLElement>('[data-drawer-panel]');
+  if (drawer && overlay && panel) {
+    const toggles = document.querySelectorAll<HTMLElement>(
+      '[data-drawer-toggle]',
+    );
+    const setOpen = (open: boolean) => {
+      drawer.classList.toggle('invisible', !open);
+      drawer.setAttribute('aria-hidden', String(!open));
+      overlay.classList.toggle('opacity-0', !open);
+      overlay.classList.toggle('opacity-100', open);
+      panel.classList.toggle('translate-x-full', !open);
+      document.body.classList.toggle('overflow-hidden', open);
+      toggles.forEach((t) => t.setAttribute('aria-expanded', String(open)));
+    };
+    toggles.forEach((t) =>
+      t.addEventListener('click', () =>
+        setOpen(drawer.classList.contains('invisible')),
+      ),
+    );
+    drawer
+      .querySelectorAll('[data-drawer-close]')
+      .forEach((el) => el.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !drawer.classList.contains('invisible')) {
+        setOpen(false);
+      }
+    });
+  }
+</script>

@@ -1,46 +1,134 @@
 ---
-import '../styles/global.css';
+import { Image } from 'astro:assets';
+import PageLayout from '../layouts/PageLayout.astro';
+import Button from '../components/ui/Button.astro';
+import Eyebrow from '../components/ui/Eyebrow.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import Card from '../components/ui/Card.astro';
+import heroImg from '../assets/images/hero/hero-halteres-miroir.jpg';
+import { healthAndBeautyBusiness } from '../lib/seo';
+import { whatsappUrl } from '../lib/whatsapp';
+
+const reassurance = [
+  '1ère séance offerte',
+  'Sans engagement',
+  '2 salles, 1 abonnement',
+  'Coachs dès l’ouverture',
+  'Pause possible si voyage',
+];
 ---
 
-<!doctype html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="manifest" href="/manifest.webmanifest" />
-    <meta name="theme-color" content="#F70188" />
-    <title>Lifitness Dakar — Transformez votre corps. Libérez votre puissance.</title>
-    <meta
-      name="description"
-      content="Club de fitness premium multi-salles à Dakar : musculation, boxe, EMS, aquatique, cours collectifs et sauna. 1 abonnement = 2 salles."
+<PageLayout
+  title="Lifitness Dakar — Salle de sport premium aux Almadies & Sacré-Cœur"
+  description="Club de fitness premium multi-salles à Dakar : musculation, boxe, EMS, aquatique, cours collectifs et sauna. 1 abonnement = 2 salles. 1ère séance offerte."
+  path="/"
+  jsonLd={healthAndBeautyBusiness()}
+>
+  <section
+    data-hero
+    class="relative isolate flex min-h-[85svh] items-center overflow-hidden"
+  >
+    <Image
+      src={heroImg}
+      alt="Adhérent Lifitness en pleine série d'haltères devant les miroirs de la salle"
+      priority
+      sizes="100vw"
+      class="absolute inset-0 -z-10 size-full object-cover object-center"
     />
-  </head>
-  <body class="min-h-screen bg-dark-primary font-sans text-light-primary">
-    <main class="mx-auto flex max-w-3xl flex-col items-center gap-8 px-6 py-24 text-center">
-      <img
-        src="/logo/lifitness-logo-full.svg"
-        alt="Lifitness Dakar"
-        width="320"
-        height="80"
-        class="w-64"
-      />
-      <p class="font-mono text-sm tracking-widest text-brand-cyan uppercase">
-        Phase 1 — Setup OK
+    <div
+      class="absolute inset-0 -z-10 bg-gradient-to-t from-dark-primary via-dark-primary/75 to-dark-primary/40"
+      aria-hidden="true"
+    ></div>
+
+    <div class="mx-auto w-full max-w-6xl px-4 py-24 sm:px-6">
+      <div class="flex max-w-2xl flex-col items-start gap-6">
+        <Eyebrow>Club premium · Dakar · 2 salles</Eyebrow>
+        <h1 class="text-4xl font-bold text-balance sm:text-6xl">
+          Transformez votre corps.
+          <span class="text-gradient">Libérez votre puissance.</span>
+        </h1>
+        <p class="text-lg text-light-primary/80 pretty">
+          Musculation, boxe, EMS, aquatique, cours collectifs. Deux salles, un
+          seul abonnement, des coachs présents dès l'ouverture. Venez suer, on
+          s'occupe du reste.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <Button href="/essai-gratuit" size="lg">
+            Réserver ma séance d'essai gratuite
+          </Button>
+          <Button href="/tarifs" size="lg" variant="outline">
+            Voir les tarifs
+          </Button>
+        </div>
+        <ul class="flex flex-wrap gap-2" aria-label="Nos garanties">
+          {reassurance.map((item) => (
+            <li class="rounded-pill border border-white/15 bg-black/40 px-3 py-1 font-mono text-xs text-light-primary/80 backdrop-blur">
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+    <SectionHeader
+      eyebrow="Carte Confort"
+      title="Un abonnement. Deux salles. Zéro frontière."
+      subtitle="Votre Carte Confort ouvre les portes des Almadies et de Sacré-Cœur 3, peu importe le jour, peu importe l'heure. Entraînez-vous là où vous voulez, quand vous voulez."
+    />
+    <div class="mt-10 grid gap-6 md:grid-cols-3">
+      <Card>
+        <p class="font-mono text-3xl text-brand-amber">01</p>
+        <h3 class="mt-3 text-xl font-bold">Accès illimité aux 2 salles</h3>
+        <p class="mt-2 text-sm text-light-primary/70">
+          Almadies ou Sacré-Cœur 3 : badgez, entrez, entraînez-vous. Aucune
+          restriction de lieu ni de créneau.
+        </p>
+      </Card>
+      <Card>
+        <p class="font-mono text-3xl text-brand-magenta">02</p>
+        <h3 class="mt-3 text-xl font-bold">
+          Musculation, cardio, boxe, EMS, aquatique
+        </h3>
+        <p class="mt-2 text-sm text-light-primary/70">
+          Plateaux complets, ring, piscine, sauna et cours collectifs Les Mills
+          : tout est inclus dans votre formule.
+        </p>
+      </Card>
+      <Card>
+        <p class="font-mono text-3xl text-brand-cyan">03</p>
+        <h3 class="mt-3 text-xl font-bold">Coachs présents dès l'ouverture</h3>
+        <p class="mt-2 text-sm text-light-primary/70">
+          De 7h à 23h en semaine, un coach est là pour vous cadrer, vous
+          corriger et vous pousser.
+        </p>
+      </Card>
+    </div>
+    <div class="mt-10 flex flex-wrap gap-4">
+      <Button href="/carte-confort">Découvrir la Carte Confort</Button>
+      <Button href={whatsappUrl()} variant="ghost" external>
+        Poser une question sur WhatsApp
+      </Button>
+    </div>
+  </section>
+
+  <section class="bg-gradient-brand">
+    <div class="mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 py-16 text-center sm:px-6">
+      <h2 class="text-3xl font-bold text-white text-balance sm:text-4xl">
+        Votre première séance est offerte.
+      </h2>
+      <p class="max-w-xl text-white/90">
+        Visite guidée, essai complet, zéro engagement. Choisissez votre salle,
+        on vous attend.
       </p>
-      <h1 class="text-4xl font-bold sm:text-5xl">
-        Transformez votre corps.
-        <br />
-        <span class="text-gradient">Libérez votre puissance.</span>
-      </h1>
-      <p class="max-w-xl text-light-primary/70">
-        Le socle technique est en place : Astro + Tailwind v4 + TypeScript
-        strict, polices self-hosted, palette de marque. La Phase 2 (fondations :
-        layout, header, footer, composants UI) arrive.
-      </p>
-      <p class="font-mono text-xs text-light-primary/40">
-        1 abonnement = 2 salles · Almadies · Sacré-Cœur 3
-      </p>
-    </main>
-  </body>
-</html>
+      <Button
+        href="/essai-gratuit"
+        size="lg"
+        class="bg-dark-primary shadow-none hover:brightness-125"
+      >
+        Réserver ma séance d'essai gratuite
+      </Button>
+    </div>
+  </section>
+</PageLayout>

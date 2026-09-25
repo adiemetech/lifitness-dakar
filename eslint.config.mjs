@@ -8,6 +8,12 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   ...eslintPluginAstro.configs['flat/recommended'],
   {
+    files: ['scripts/**/*.mjs'],
+    languageOptions: {
+      globals: { process: 'readonly', Buffer: 'readonly', console: 'readonly' },
+    },
+  },
+  {
     rules: {
       '@typescript-eslint/no-unused-vars': [
         'error',

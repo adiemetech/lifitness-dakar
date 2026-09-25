@@ -1,0 +1,38 @@
+---
+import { whatsappUrl } from '../../lib/whatsapp';
+---
+
+<a
+  href={whatsappUrl()}
+  target="_blank"
+  rel="noopener"
+  data-whatsapp-float
+  aria-label="Discuter avec Lifitness sur WhatsApp"
+  class="fixed right-4 bottom-24 z-40 grid size-14 place-items-center rounded-full bg-[#25D366] text-white shadow-xl shadow-black/40 transition duration-300 hover:scale-105 md:bottom-6"
+>
+  <svg
+    width="28"
+    height="28"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.96L2 22l5.18-1.5A9.9 9.9 0 1 0 12.04 2Zm0 1.8a8.1 8.1 0 1 1-4.1 15.1l-.3-.18-3.06.9.9-2.98-.2-.31A8.1 8.1 0 0 1 12.04 3.8Zm-3.2 4.1c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02 0 1.2.87 2.35 1 2.51.12.16 1.7 2.6 4.13 3.64 2.02.87 2.43.7 2.87.65.44-.04 1.42-.58 1.62-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28-.24-.12-1.42-.7-1.64-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.93-1.19-.71-.64-1.19-1.42-1.33-1.66-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.53-1.3-.73-1.77-.19-.46-.38-.4-.53-.41h-.51Z" />
+  </svg>
+</a>
+
+<script>
+  const float = document.querySelector<HTMLElement>('[data-whatsapp-float]');
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  if (float && hero) {
+    const hidden = ['pointer-events-none', 'translate-y-3', 'opacity-0'];
+    const observer = new IntersectionObserver(
+      ([entry]) =>
+        entry.isIntersecting
+          ? float.classList.add(...hidden)
+          : float.classList.remove(...hidden),
+      { threshold: 0.15 },
+    );
+    observer.observe(hero);
+  }
+</script>
