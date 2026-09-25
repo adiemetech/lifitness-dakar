@@ -2,11 +2,7 @@ export interface ProgrammeEn {
   slug: string;
   name: string;
   category:
-    | 'Floors'
-    | 'Group Classes'
-    | 'Technologies'
-    | 'Aqua Area'
-    | 'Recovery';
+    'Floors' | 'Group Classes' | 'Technologies' | 'Aqua Area' | 'Recovery';
   tagline: string;
   description: string;
   points: string[];
