@@ -1,45 +1,127 @@
 ---
+import { Image } from 'astro:assets';
 import PageLayout from '../../layouts/PageLayout.astro';
 import Button from '../../components/ui/Button.astro';
+import Eyebrow from '../../components/ui/Eyebrow.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import PricingCard from '../../components/ui/PricingCard.astro';
+import SalleCard from '../../components/ui/SalleCard.astro';
+import ServicesPreview from '../../components/sections/ServicesPreview.astro';
+import CarteConfort from '../../components/sections/CarteConfort.astro';
+import TestimonialsCarousel from '../../components/sections/TestimonialsCarousel.astro';
 import FinalCTA from '../../components/sections/FinalCTA.astro';
+import heroImg from '../../assets/images/hero/hero-halteres-miroir.jpg';
+import { healthAndBeautyBusiness } from '../../lib/seo';
+import { whatsappUrl, WHATSAPP_DEFAULT_MESSAGE_EN } from '../../lib/whatsapp';
+import { formulesEn } from '../../data/en/tarifs';
+import { sallesEn } from '../../data/en/salles';
+
+const reassurance = [
+  'First session free',
+  'No commitment',
+  '2 gyms, 1 membership',
+  'Coaches from opening time',
+  'Freeze available when travelling',
+];
 ---
 
 <PageLayout
   lang="en"
-  path="/en/"
   title="Lifitness Dakar — Premium Gyms in Almadies & Sacré-Cœur"
-  description="One membership, two premium gyms in Dakar: strength training, boxing, EMS, aqua classes and sauna. Your first session is free."
+  description="Premium multi-gym fitness club in Dakar: strength training, boxing, EMS, aqua classes and sauna. 1 membership = 2 gyms. First session free."
+  path="/en/"
+  jsonLd={healthAndBeautyBusiness('en')}
 >
   <section
     data-hero
-    class="relative overflow-hidden bg-dark-secondary px-4 pt-20 pb-24 sm:px-6"
+    class="relative isolate flex min-h-[85svh] items-center overflow-hidden"
   >
-    <div class="absolute inset-0 bg-gradient-brand opacity-15"></div>
+    <Image
+      src={heroImg}
+      alt="Lifitness member mid-set with dumbbells in front of the gym mirrors"
+      priority
+      sizes="100vw"
+      data-parallax
+      class="absolute inset-0 -z-10 size-full object-cover object-center"
+    />
     <div
-      data-hero-stagger
-      class="relative mx-auto flex max-w-2xl flex-col items-start gap-6"
-    >
-      <p class="font-mono text-xs tracking-[0.3em] text-brand-cyan uppercase">
-        Almadies · Sacré-Cœur 3 · Dakar
-      </p>
-      <h1 class="text-4xl font-bold text-balance sm:text-5xl">
-        Transform your body.
-        <br />
-        Unleash your power.
-      </h1>
-      <p class="text-light-primary/80 pretty">
-        One membership, two premium gyms. Strength training, boxing, EMS, aqua
-        classes and sauna — with coaches who push you further.
-      </p>
-      <div class="flex flex-wrap gap-4">
-        <Button href="/en/free-trial" size="lg">
-          Book my free trial
-        </Button>
-        <Button href="/en/pricing" variant="outline" size="lg">
-          See pricing
-        </Button>
+      class="absolute inset-0 -z-10 bg-gradient-to-t from-dark-primary via-dark-primary/75 to-dark-primary/40"
+      aria-hidden="true"
+    ></div>
+
+    <div class="mx-auto w-full max-w-6xl px-4 py-24 sm:px-6">
+      <div data-hero-stagger class="flex max-w-2xl flex-col items-start gap-6">
+        <Eyebrow>Premium club · Dakar · 2 gyms</Eyebrow>
+        <h1 class="text-4xl font-bold text-balance sm:text-6xl">
+          Transform your body.
+          <span class="text-gradient">Unleash your power.</span>
+        </h1>
+        <p class="text-lg text-light-primary/80 pretty">
+          Strength training, boxing, EMS, aqua classes, group classes. Two gyms,
+          one membership, coaches on site from opening time. Come sweat — we
+          handle the rest.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <Button href="/en/pricing" size="lg" variant="outline">
+            See pricing
+          </Button>
+          <Button href="/en/free-trial" size="lg">
+            Book my free trial session
+          </Button>
+        </div>
+        <ul class="flex flex-wrap gap-2" aria-label="Our guarantees">
+          {reassurance.map((item) => (
+            <li class="rounded-pill border border-white/15 bg-black/40 px-3 py-1 font-mono text-xs text-light-primary/80 backdrop-blur">
+              {item}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   </section>
+
+  <ServicesPreview lang="en" />
+  <CarteConfort lang="en" />
+  <TestimonialsCarousel lang="en" />
+
+  <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+    <SectionHeader
+      eyebrow="Plans"
+      title="Pick your pace."
+      subtitle="From 30,000 FCFA per month, Comfort Card included. One-time registration: 20,000 FCFA."
+    />
+    <div class="mt-10 grid gap-6 md:grid-cols-3">
+      {formulesEn.map((f) => (
+        <PricingCard formule={f} lang="en" />
+      ))}
+    </div>
+    <div class="mt-8">
+      <Button href="/en/pricing" variant="ghost">
+        Compare plan details
+      </Button>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+    <SectionHeader
+      eyebrow="Our gyms"
+      title="Almadies or Sacré-Cœur: your card opens both."
+    />
+    <div class="mt-10 grid gap-6 md:grid-cols-2">
+      {sallesEn.map((salle) => (
+        <SalleCard salle={salle} lang="en" />
+      ))}
+    </div>
+    <div class="mt-8">
+      <Button
+        href={whatsappUrl(WHATSAPP_DEFAULT_MESSAGE_EN)}
+        variant="ghost"
+        external
+      >
+        Ask a question on WhatsApp
+      </Button>
+    </div>
+  </section>
+
   <FinalCTA lang="en" />
 </PageLayout>

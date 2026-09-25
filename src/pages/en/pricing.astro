@@ -1,0 +1,88 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import PricingCard from '../../components/ui/PricingCard.astro';
+import FAQAccordion from '../../components/ui/FAQAccordion.astro';
+import FinalCTA from '../../components/sections/FinalCTA.astro';
+import {
+  formulesEn,
+  fraisInscriptionEn,
+  inclusPartoutEn,
+  noteGelEn,
+} from '../../data/en/tarifs';
+import { breadcrumbList } from '../../lib/seo';
+
+const faqPricing = [
+  {
+    question: 'Is the registration fee paid only once?',
+    answer:
+      'Yes. A 20,000 FCFA entrance fee, paid once at registration, whatever plan you choose.',
+  },
+  {
+    question: 'Can I freeze my membership while travelling?',
+    answer:
+      'Yes, for absences longer than a week, on long-term plans (3-month plan and above). Your expiry date is pushed back accordingly.',
+  },
+  {
+    question: 'Am I tied in for a minimum period?',
+    answer:
+      'No. The Monthly plan renews month to month, with no commitment. The 3-month plans are paid upfront and include the membership freeze option.',
+  },
+  {
+    question: 'What does the Comfort Card include?',
+    answer:
+      'Every plan includes the Comfort Card: unlimited access to both gyms (Almadies and Sacré-Cœur 3), whatever the day or time.',
+  },
+];
+---
+
+<PageLayout
+  lang="en"
+  title="Pricing — From 30,000 FCFA/month, 2 gyms included | Lifitness Dakar"
+  description="Lifitness Dakar pricing: one-time 20,000 FCFA registration, monthly from 30,000 FCFA, 3-month plan 90,000 FCFA, BASIC+ plan with unlimited pool. Comfort Card included."
+  path="/en/pricing"
+  jsonLd={breadcrumbList([
+    { name: 'Home', path: '/en/' },
+    { name: 'Pricing', path: '/en/pricing' },
+  ])}
+>
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-10 sm:px-6">
+    <SectionHeader
+      eyebrow="Pricing"
+      title="Clear prices. No hidden lines."
+      subtitle="A single entrance fee, simple monthly payments, and the Comfort Card included in every plan: both gyms, always."
+      align="center"
+      class="mx-auto"
+    />
+    <p class="mx-auto mt-8 w-fit rounded-pill border border-brand-amber/40 bg-brand-amber/10 px-5 py-2 font-mono text-sm text-brand-amber">
+      {fraisInscriptionEn.label}: {fraisInscriptionEn.montant}{' '}
+      {fraisInscriptionEn.unite}
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <div class="grid gap-6 md:grid-cols-3">
+      {formulesEn.map((f) => (
+        <PricingCard formule={f} lang="en" />
+      ))}
+    </div>
+    <ul class="mx-auto mt-10 flex max-w-3xl flex-col items-center gap-2 text-center text-sm text-light-primary/75">
+      {inclusPartoutEn.map((item) => (
+        <li class="flex items-center gap-2">
+          <span class="text-brand-magenta" aria-hidden="true">
+            ✓
+          </span>
+          {item}
+        </li>
+      ))}
+    </ul>
+    <p class="mt-6 text-center text-xs text-light-primary/55">{noteGelEn}</p>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-20 sm:px-6">
+    <h2 class="mb-6 text-2xl font-bold">Pricing questions, straight answers</h2>
+    <FAQAccordion items={faqPricing} />
+  </section>
+
+  <FinalCTA lang="en" />
+</PageLayout>

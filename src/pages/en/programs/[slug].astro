@@ -1,0 +1,133 @@
+---
+import { Image } from 'astro:assets';
+import PageLayout from '../../../layouts/PageLayout.astro';
+import Eyebrow from '../../../components/ui/Eyebrow.astro';
+import Button from '../../../components/ui/Button.astro';
+import ProgrammeCard from '../../../components/ui/ProgrammeCard.astro';
+import FinalCTA from '../../../components/sections/FinalCTA.astro';
+import { programmesEn, getProgrammeEn } from '../../../data/en/programmes';
+import { breadcrumbList, sportsActivityLocation } from '../../../lib/seo';
+import musculationImg from '../../../assets/images/hero/hero-developpe-halteres.png';
+
+export function getStaticPaths() {
+  return programmesEn.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const programme = getProgrammeEn(slug!);
+const image = programme.slug === 'strength' ? musculationImg : null;
+const others = programmesEn
+  .filter((p) => p.slug !== programme.slug)
+  .slice(0, 3);
+---
+
+<PageLayout
+  lang="en"
+  title={`${programme.nom} — Lifitness Dakar`}
+  description={programme.accroche}
+  path={`/en/programs/${programme.slug}`}
+  jsonLd={[
+    breadcrumbList([
+      { name: 'Home', path: '/en/' },
+      { name: 'Programs', path: '/en/programs' },
+      { name: programme.nom, path: `/en/programs/${programme.slug}` },
+    ]),
+    sportsActivityLocation({
+      name: programme.nom,
+      description: programme.description,
+      path: `/en/programs/${programme.slug}`,
+    }),
+  ]}
+>
+  <section class="relative isolate overflow-hidden">
+    {image && (
+      <Image
+        src={image}
+        alt={`${programme.nom} session at Lifitness Dakar`}
+        sizes="100vw"
+        class="absolute inset-0 -z-10 size-full object-cover"
+      />
+    )}
+    <div
+      class:list={[
+        'absolute inset-0 -z-10',
+        image
+          ? 'bg-gradient-to-t from-dark-primary via-dark-primary/80 to-dark-primary/50'
+          : 'bg-gradient-brand opacity-90',
+      ]}
+      aria-hidden="true"
+    ></div>
+    <div class="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+      <nav aria-label="Breadcrumb" class="mb-6">
+        <ol class="flex gap-2 font-mono text-xs text-light-primary/60">
+          <li>
+            <a href="/en/" class="hover:text-brand-pink">
+              Home
+            </a>
+          </li>
+          <li aria-hidden="true">/</li>
+          <li>
+            <a href="/en/programs" class="hover:text-brand-pink">
+              Programs
+            </a>
+          </li>
+          <li aria-hidden="true">/</li>
+          <li class="text-light-primary">{programme.nom}</li>
+        </ol>
+      </nav>
+      <div class="flex max-w-2xl flex-col items-start gap-5">
+        <Eyebrow class={image ? '' : 'text-white/80'}>
+          {programme.categorie}
+        </Eyebrow>
+        <h1 class="text-4xl font-bold text-balance sm:text-5xl">
+          {programme.nom}
+        </h1>
+        <p class="text-lg text-light-primary/85 pretty">{programme.accroche}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto grid max-w-6xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[1.4fr_1fr]">
+    <div class="flex flex-col gap-6">
+      <p class="text-lg text-light-primary/85 pretty">
+        {programme.description}
+      </p>
+      <ul class="flex flex-col gap-3">
+        {programme.points.map((point) => (
+          <li class="flex gap-3 rounded-card border border-white/10 bg-dark-secondary px-5 py-4 text-sm">
+            <span class={programme.accent} aria-hidden="true">
+              ✓
+            </span>
+            {point}
+          </li>
+        ))}
+      </ul>
+    </div>
+    <aside class="flex flex-col gap-4 rounded-card border border-white/10 bg-dark-secondary p-7">
+      <h2 class="text-xl font-bold">Take action</h2>
+      <p class="text-sm text-light-primary/70">
+        First session free, guided tour included. Try
+        {` ${programme.nom.toLowerCase()} `}
+        before you commit.
+      </p>
+      <Button href="/en/free-trial">Book my trial session</Button>
+      <Button href="/en/schedule" variant="outline">
+        See the schedule
+      </Button>
+      <Button href="/en/pricing" variant="ghost">
+        See pricing
+      </Button>
+    </aside>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+    <h2 class="text-2xl font-bold">Explore next</h2>
+    <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {others.map((p) => (
+        <ProgrammeCard programme={p} lang="en" />
+      ))}
+    </div>
+  </section>
+
+  <FinalCTA lang="en" />
+</PageLayout>

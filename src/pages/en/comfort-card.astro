@@ -1,0 +1,90 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import SalleCard from '../../components/ui/SalleCard.astro';
+import Card from '../../components/ui/Card.astro';
+import Button from '../../components/ui/Button.astro';
+import FinalCTA from '../../components/sections/FinalCTA.astro';
+import { sallesEn } from '../../data/en/salles';
+import { breadcrumbList } from '../../lib/seo';
+
+const benefits = [
+  {
+    titre: 'Zero geographic friction',
+    texte:
+      'One day in Almadies near the office, one weekend in Sacré-Cœur near home. Your membership follows your life, not the other way around.',
+  },
+  {
+    titre: 'Two vibes, one community',
+    texte:
+      'Every gym has its energy: the Corniche for evening sessions, Sacré-Cœur for the neighbourhood feel. You belong to both.',
+  },
+  {
+    titre: 'Always a gym open near you',
+    texte:
+      'Same opening hours in both gyms: 7am–11pm on weekdays, 8am–8pm on Saturday, 8am–1pm on Sunday. No schedule excuses.',
+  },
+];
+---
+
+<PageLayout
+  lang="en"
+  title="Comfort Card — 1 membership, 2 gyms | Lifitness Dakar"
+  description="The Lifitness Comfort Card: a single membership for unlimited access to both Dakar gyms, Almadies and Sacré-Cœur 3, whatever the day or time."
+  path="/en/comfort-card"
+  jsonLd={breadcrumbList([
+    { name: 'Home', path: '/en/' },
+    { name: 'Comfort Card', path: '/en/comfort-card' },
+  ])}
+>
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-10 sm:px-6">
+    <SectionHeader
+      eyebrow="The Lifitness concept"
+      title="Comfort Card: your body has no neighbourhood."
+      subtitle="One single membership, unlimited access to both Lifitness gyms in Dakar. Whatever the place, whatever the time: your card opens every door."
+      align="center"
+      class="mx-auto"
+    />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <div class="grid gap-6 md:grid-cols-3">
+      {benefits.map((a, i) => (
+        <Card>
+          <p class="font-mono text-3xl text-brand-cyan">0{i + 1}</p>
+          <h2 class="mt-3 text-xl font-bold">{a.titre}</h2>
+          <p class="mt-2 text-sm text-light-primary/70">{a.texte}</p>
+        </Card>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <h2 class="mb-6 text-2xl font-bold">The two gyms on your card</h2>
+    <div class="grid gap-6 md:grid-cols-2">
+      {sallesEn.map((salle) => (
+        <SalleCard salle={salle} lang="en" />
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+    <div class="flex flex-col items-center gap-6 rounded-card border border-brand-magenta/40 bg-dark-secondary p-10 text-center">
+      <h2 class="text-2xl font-bold text-balance">
+        The Comfort Card is included in every plan.
+      </h2>
+      <p class="max-w-xl text-sm text-light-primary/75">
+        Monthly, 3-month plan or BASIC+: no extra cost to enjoy both gyms.
+        Compare the plans and pick yours.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <Button href="/en/pricing">See pricing</Button>
+        <Button href="/en/free-trial" variant="outline">
+          Book my free trial
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <FinalCTA lang="en" />
+</PageLayout>

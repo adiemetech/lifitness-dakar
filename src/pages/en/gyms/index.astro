@@ -1,0 +1,43 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import SalleCard from '../../../components/ui/SalleCard.astro';
+import StatBlock from '../../../components/ui/StatBlock.astro';
+import FinalCTA from '../../../components/sections/FinalCTA.astro';
+import { sallesEn } from '../../../data/en/salles';
+import { breadcrumbList } from '../../../lib/seo';
+---
+
+<PageLayout
+  lang="en"
+  title="Our 2 Gyms in Dakar — Almadies & Sacré-Cœur | Lifitness"
+  description="Lifitness Almadies (Corniche Ouest) and Lifitness Sacré-Cœur 3 (behind Auchan): one membership, unlimited access to both gyms with the Comfort Card."
+  path="/en/gyms"
+  jsonLd={breadcrumbList([
+    { name: 'Home', path: '/en/' },
+    { name: 'Gyms', path: '/en/gyms' },
+  ])}
+>
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-10 sm:px-6">
+    <SectionHeader
+      eyebrow="Our gyms"
+      title="Two addresses. One single card."
+      subtitle="The Comfort Card opens both gyms without restrictions. Train near your home, your office, or wherever your mood takes you."
+    />
+    <div class="mt-10 grid gap-8 sm:grid-cols-3">
+      <StatBlock valeur="2" label="Gyms in Dakar" />
+      <StatBlock valeur="1" label="Single membership" />
+      <StatBlock valeur="16h" label="Open per day on weekdays" />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+    <div class="grid gap-6 md:grid-cols-2">
+      {sallesEn.map((salle) => (
+        <SalleCard salle={salle} lang="en" />
+      ))}
+    </div>
+  </section>
+
+  <FinalCTA lang="en" />
+</PageLayout>

@@ -1,0 +1,44 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import ProgrammeCard from '../../../components/ui/ProgrammeCard.astro';
+import FinalCTA from '../../../components/sections/FinalCTA.astro';
+import Button from '../../../components/ui/Button.astro';
+import { programmesEn } from '../../../data/en/programmes';
+import { breadcrumbList } from '../../../lib/seo';
+---
+
+<PageLayout
+  lang="en"
+  title="Programs — Strength, Boxing, EMS, Aqua | Lifitness Dakar"
+  description="All Lifitness Dakar programs: strength training, cardio, CrossFit, TRX, boxing, EMS, Les Mills group classes, aqua gym, aqua bike and sauna, in Almadies and Sacré-Cœur 3."
+  path="/en/programs"
+  jsonLd={breadcrumbList([
+    { name: 'Home', path: '/en/' },
+    { name: 'Programs', path: '/en/programs' },
+  ])}
+>
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-10 sm:px-6">
+    <SectionHeader
+      eyebrow="Programs"
+      title="Nine playgrounds. One single badge."
+      subtitle="Every program is supervised by coaches on site from opening time, in both gyms. Pick your fight — or combine them all."
+    />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {programmesEn.map((p) => (
+        <ProgrammeCard programme={p} lang="en" />
+      ))}
+    </div>
+    <div class="mt-12 flex flex-wrap gap-4">
+      <Button href="/en/schedule">See the schedule</Button>
+      <Button href="/en/pricing" variant="outline">
+        See pricing
+      </Button>
+    </div>
+  </section>
+
+  <FinalCTA lang="en" />
+</PageLayout>
