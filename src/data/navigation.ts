@@ -1,28 +1,30 @@
+import type { UiKey } from '../i18n/ui';
+
 export interface NavItem {
-  label: string;
-  href: string;
+  labelKey: UiKey;
+  href: string; // chemin FR — localisé via localizedPath()
 }
 
 export const mainNav: NavItem[] = [
-  { label: 'Le club', href: '/club' },
-  { label: 'Salles', href: '/salles' },
-  { label: 'Programmes', href: '/programmes' },
-  { label: 'Tarifs', href: '/tarifs' },
-  { label: 'Planning', href: '/planning' },
-  { label: 'Contact', href: '/contact' },
+  { labelKey: 'nav.club', href: '/club' },
+  { labelKey: 'nav.gyms', href: '/salles' },
+  { labelKey: 'nav.programs', href: '/programmes' },
+  { labelKey: 'nav.pricing', href: '/tarifs' },
+  { labelKey: 'nav.schedule', href: '/planning' },
+  { labelKey: 'nav.contact', href: '/contact' },
 ];
 
 export const legalNav: NavItem[] = [
-  { label: 'Mentions légales', href: '/mentions-legales' },
-  { label: 'CGV', href: '/cgv' },
-  { label: 'Confidentialité', href: '/confidentialite' },
+  { labelKey: 'nav.legalNotice', href: '/mentions-legales' },
+  { labelKey: 'nav.terms', href: '/cgv' },
+  { labelKey: 'nav.privacy', href: '/confidentialite' },
 ];
 
 export const secondaryNav: NavItem[] = [
-  { label: 'Coachs', href: '/coachs' },
-  { label: 'Carte Confort', href: '/carte-confort' },
-  { label: 'Galerie', href: '/galerie' },
-  { label: 'Avis', href: '/avis' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'FAQ', href: '/faq' },
+  { labelKey: 'nav.coaches', href: '/coachs' },
+  { labelKey: 'nav.comfortCard', href: '/carte-confort' },
+  { labelKey: 'nav.gallery', href: '/galerie' },
+  { labelKey: 'nav.reviews', href: '/avis' },
+  { labelKey: 'nav.blog', href: '/blog' },
+  { labelKey: 'nav.faq', href: '/faq' },
 ];

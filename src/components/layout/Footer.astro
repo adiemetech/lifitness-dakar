@@ -3,10 +3,22 @@ import { Image } from 'astro:assets';
 import fullLogo from '../../assets/logo/lifitness-logo-full.png';
 import { mainNav, secondaryNav, legalNav } from '../../data/navigation';
 import { salles, telHref } from '../../data/salles';
-import { horaires, horairesNote } from '../../data/horaires';
+import { horaires, horairesNote, horairesNoteEn } from '../../data/horaires';
 import { SITE_EMAIL, SAME_AS, BOOKING_URL } from '../../lib/seo';
+import type { Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/ui';
+import { localizedPath } from '../../i18n/routes';
 
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'fr' } = Astro.props;
+const t = useTranslations(lang);
 const annee = new Date().getFullYear();
+
+const formatTime = (time: string) =>
+  lang === 'en' ? time : time.replace(':', 'h');
 ---
 
 <footer class="border-t border-white/10 bg-dark-secondary">
@@ -19,16 +31,13 @@ const annee = new Date().getFullYear();
         height={156}
         class="h-16 w-auto"
       />
-      <p class="text-sm text-light-primary/70 pretty">
-        Transformez votre corps. Libérez votre puissance. Un seul abonnement,
-        deux salles, zéro excuse.
-      </p>
+      <p class="text-sm text-light-primary/70 pretty">{t('footer.tagline')}</p>
       <div class="flex gap-3">
         <a
           href={SAME_AS[0]}
           target="_blank"
           rel="noopener"
-          aria-label="Lifitness sur Facebook"
+          aria-label={t('footer.facebookAria')}
           class="grid size-10 place-items-center rounded-card border border-white/15 transition hover:border-brand-magenta hover:text-brand-pink"
         >
           <svg
@@ -45,7 +54,7 @@ const annee = new Date().getFullYear();
           href={SAME_AS[1]}
           target="_blank"
           rel="noopener"
-          aria-label="Lifitness sur Instagram"
+          aria-label={t('footer.instagramAria')}
           class="grid size-10 place-items-center rounded-card border border-white/15 transition hover:border-brand-magenta hover:text-brand-pink"
         >
           <svg
@@ -61,18 +70,18 @@ const annee = new Date().getFullYear();
       </div>
     </div>
 
-    <nav aria-label="Navigation footer">
+    <nav aria-label={t('nav.footerAria')}>
       <p class="mb-4 font-mono text-xs tracking-[0.3em] text-brand-cyan uppercase">
-        Explorer
+        {t('footer.explore')}
       </p>
       <ul class="flex flex-col gap-2 text-sm">
         {[...mainNav, ...secondaryNav].map((item) => (
           <li>
             <a
-              href={item.href}
+              href={localizedPath(item.href, lang)}
               class="text-light-primary/70 transition hover:text-brand-pink"
             >
-              {item.label}
+              {t(item.labelKey)}
             </a>
           </li>
         ))}
@@ -81,7 +90,7 @@ const annee = new Date().getFullYear();
             href={BOOKING_URL}
             class="text-light-primary/70 transition hover:text-brand-pink"
           >
-            Réservation Multiresa
+            {t('footer.booking')}
           </a>
         </li>
       </ul>
@@ -89,13 +98,13 @@ const annee = new Date().getFullYear();
 
     <div>
       <p class="mb-4 font-mono text-xs tracking-[0.3em] text-brand-cyan uppercase">
-        Nos salles
+        {t('footer.ourGyms')}
       </p>
       <ul class="flex flex-col gap-4 text-sm text-light-primary/70">
         {salles.map((salle) => (
           <li>
             <a
-              href={`/salles/${salle.slug}`}
+              href={localizedPath(`/salles/${salle.slug}`, lang)}
               class="font-semibold text-light-primary transition hover:text-brand-pink"
             >
               {salle.nom}
@@ -115,19 +124,21 @@ const annee = new Date().getFullYear();
 
     <div>
       <p class="mb-4 font-mono text-xs tracking-[0.3em] text-brand-cyan uppercase">
-        Horaires & contact
+        {t('footer.hoursContact')}
       </p>
       <ul class="flex flex-col gap-1 text-sm text-light-primary/70">
         {horaires.map((c) => (
           <li class="flex justify-between gap-4">
-            <span>{c.label}</span>
+            <span>{lang === 'en' ? c.labelEn : c.label}</span>
             <span class="font-mono">
-              {c.opens.replace(':', 'h')} – {c.closes.replace(':', 'h')}
+              {formatTime(c.opens)} – {formatTime(c.closes)}
             </span>
           </li>
         ))}
       </ul>
-      <p class="mt-2 text-sm text-light-primary/70">{horairesNote}</p>
+      <p class="mt-2 text-sm text-light-primary/70">
+        {lang === 'en' ? horairesNoteEn : horairesNote}
+      </p>
       <a
         href={`mailto:${SITE_EMAIL}`}
         class="mt-4 inline-block font-mono text-sm transition hover:text-brand-pink"
@@ -139,12 +150,17 @@ const annee = new Date().getFullYear();
 
   <div class="border-t border-white/10 px-4 py-5 sm:px-6">
     <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 text-xs text-light-primary/50 sm:flex-row">
-      <p>© {annee} Lifitness Dakar. Tous droits réservés.</p>
+      <p>
+        © {annee} Lifitness Dakar. {t('footer.rights')}
+      </p>
       <ul class="flex gap-4">
         {legalNav.map((item) => (
           <li>
-            <a href={item.href} class="transition hover:text-brand-pink">
-              {item.label}
+            <a
+              href={localizedPath(item.href, lang)}
+              class="transition hover:text-brand-pink"
+            >
+              {t(item.labelKey)}
             </a>
           </li>
         ))}

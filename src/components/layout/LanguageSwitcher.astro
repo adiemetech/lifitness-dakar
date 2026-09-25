@@ -1,0 +1,42 @@
+---
+import type { Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  hrefFr: string;
+  hrefEn: string;
+  class?: string;
+}
+
+const { lang, hrefFr, hrefEn, class: className } = Astro.props;
+const t = useTranslations(lang);
+
+const base = 'rounded-pill px-2.5 py-1 font-semibold tracking-wide transition';
+const active = 'bg-brand-magenta text-white';
+const idle = 'text-light-primary/70 hover:text-white';
+---
+
+<div
+  role="group"
+  aria-label={t('lang.switchAria')}
+  class:list={[
+    'inline-flex items-center gap-0.5 rounded-pill border border-white/15 p-0.5 font-mono text-xs',
+    className,
+  ]}
+>
+  <a
+    href={hrefFr}
+    aria-current={lang === 'fr' ? 'true' : undefined}
+    class:list={[base, lang === 'fr' ? active : idle]}
+  >
+    FR
+  </a>
+  <a
+    href={hrefEn}
+    aria-current={lang === 'en' ? 'true' : undefined}
+    class:list={[base, lang === 'en' ? active : idle]}
+  >
+    EN
+  </a>
+</div>

@@ -3,12 +3,29 @@ import { Image } from 'astro:assets';
 import navLogo from '../../assets/logo/lifitness-logo-nav.png';
 import Nav from './Nav.astro';
 import Button from '../ui/Button.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
 import { salles, telHref } from '../../data/salles';
+import type { Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/ui';
+import { localizedPath } from '../../i18n/routes';
+
+interface Props {
+  lang?: Lang;
+  hrefFr?: string;
+  hrefEn?: string;
+}
+
+const { lang = 'fr', hrefFr = '/', hrefEn = '/en/' } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <header class="sticky top-0 z-40 border-b border-white/5 bg-dark-primary/85 backdrop-blur-md">
   <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-    <a href="/" class="shrink-0" aria-label="Lifitness — retour à l'accueil">
+    <a
+      href={localizedPath('/', lang)}
+      class="shrink-0"
+      aria-label={t('header.homeAria')}
+    >
       <Image
         src={navLogo}
         alt="Lifitness"
@@ -18,17 +35,22 @@ import { salles, telHref } from '../../data/salles';
       />
     </a>
 
-    <Nav />
+    <Nav lang={lang} />
 
     <div class="flex items-center gap-3">
       <a
         href={telHref(salles[0])}
-        class="hidden font-mono text-sm text-light-primary/80 transition hover:text-brand-pink xl:block"
+        class="hidden font-mono text-sm text-light-primary/80 transition hover:text-brand-pink 2xl:block"
       >
         {salles[0].telephone}
       </a>
-      <Button href="/essai-gratuit" size="sm" class="hidden sm:inline-flex">
-        Essai gratuit
+      <LanguageSwitcher lang={lang} hrefFr={hrefFr} hrefEn={hrefEn} />
+      <Button
+        href={localizedPath('/essai-gratuit', lang)}
+        size="sm"
+        class="hidden sm:inline-flex"
+      >
+        {t('cta.freeTrial')}
       </Button>
       <button
         type="button"
@@ -37,7 +59,7 @@ import { salles, telHref } from '../../data/salles';
         aria-expanded="false"
         class="grid size-10 place-items-center rounded-card border border-white/15 text-light-primary transition hover:border-brand-magenta lg:hidden"
       >
-        <span class="sr-only">Ouvrir le menu</span>
+        <span class="sr-only">{t('header.openMenu')}</span>
         <svg
           width="22"
           height="22"

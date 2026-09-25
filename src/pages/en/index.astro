@@ -1,0 +1,45 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Button from '../../components/ui/Button.astro';
+import FinalCTA from '../../components/sections/FinalCTA.astro';
+---
+
+<PageLayout
+  lang="en"
+  path="/en/"
+  title="Lifitness Dakar — Premium Gyms in Almadies & Sacré-Cœur"
+  description="One membership, two premium gyms in Dakar: strength training, boxing, EMS, aqua classes and sauna. Your first session is free."
+>
+  <section
+    data-hero
+    class="relative overflow-hidden bg-dark-secondary px-4 pt-20 pb-24 sm:px-6"
+  >
+    <div class="absolute inset-0 bg-gradient-brand opacity-15"></div>
+    <div
+      data-hero-stagger
+      class="relative mx-auto flex max-w-2xl flex-col items-start gap-6"
+    >
+      <p class="font-mono text-xs tracking-[0.3em] text-brand-cyan uppercase">
+        Almadies · Sacré-Cœur 3 · Dakar
+      </p>
+      <h1 class="text-4xl font-bold text-balance sm:text-5xl">
+        Transform your body.
+        <br />
+        Unleash your power.
+      </h1>
+      <p class="text-light-primary/80 pretty">
+        One membership, two premium gyms. Strength training, boxing, EMS, aqua
+        classes and sauna — with coaches who push you further.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <Button href="/en/free-trial" size="lg">
+          Book my free trial
+        </Button>
+        <Button href="/en/pricing" variant="outline" size="lg">
+          See pricing
+        </Button>
+      </div>
+    </div>
+  </section>
+  <FinalCTA lang="en" />
+</PageLayout>

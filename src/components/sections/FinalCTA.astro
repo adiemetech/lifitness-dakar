@@ -1,22 +1,29 @@
 ---
 import Button from '../ui/Button.astro';
+import type { Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/ui';
+import { localizedPath } from '../../i18n/routes';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'fr' } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <section class="animate-gradient bg-gradient-brand">
   <div class="mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 py-16 text-center sm:px-6">
     <h2 class="text-3xl font-bold text-white text-balance sm:text-4xl">
-      Votre première séance est offerte.
+      {t('finalcta.title')}
     </h2>
-    <p class="max-w-xl text-white/90">
-      Visite guidée, essai complet, zéro engagement. Choisissez votre salle, on
-      vous attend.
-    </p>
+    <p class="max-w-xl text-white/90">{t('finalcta.text')}</p>
     <Button
-      href="/essai-gratuit"
+      href={localizedPath('/essai-gratuit', lang)}
       size="lg"
       class="bg-dark-primary shadow-none hover:brightness-125"
     >
-      Réserver ma séance d'essai gratuite
+      {t('finalcta.button')}
     </Button>
   </div>
 </section>

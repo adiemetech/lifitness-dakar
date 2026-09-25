@@ -1,26 +1,38 @@
 ---
 import { mainNav } from '../../data/navigation';
+import type { Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/ui';
+import { localizedPath, normalizePath } from '../../i18n/routes';
 
-const current = Astro.url.pathname;
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'fr' } = Astro.props;
+const t = useTranslations(lang);
+const current = normalizePath(Astro.url.pathname);
 ---
 
-<nav aria-label="Navigation principale" class="hidden lg:block">
+<nav aria-label={t('nav.aria')} class="hidden lg:block">
   <ul class="flex items-center gap-1">
-    {mainNav.map((item) => (
-      <li>
-        <a
-          href={item.href}
-          aria-current={current === item.href ? 'page' : undefined}
-          class:list={[
-            'rounded-pill px-3 py-2 text-sm font-medium transition',
-            current === item.href
-              ? 'text-brand-pink'
-              : 'text-light-primary/80 hover:bg-white/5 hover:text-white',
-          ]}
-        >
-          {item.label}
-        </a>
-      </li>
-    ))}
+    {mainNav.map((item) => {
+      const href = localizedPath(item.href, lang);
+      return (
+        <li>
+          <a
+            href={href}
+            aria-current={current === href ? 'page' : undefined}
+            class:list={[
+              'rounded-pill px-3 py-2 text-sm font-medium transition',
+              current === href
+                ? 'text-brand-pink'
+                : 'text-light-primary/80 hover:bg-white/5 hover:text-white',
+            ]}
+          >
+            {t(item.labelKey)}
+          </a>
+        </li>
+      );
+    })}
   </ul>
 </nav>

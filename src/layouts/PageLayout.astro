@@ -6,31 +6,37 @@ import MobileDrawer from '../components/layout/MobileDrawer.astro';
 import StickyMobileCTA from '../components/layout/StickyMobileCTA.astro';
 import WhatsAppFloat from '../components/layout/WhatsAppFloat.astro';
 import { organization } from '../lib/seo';
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/ui';
+import { alternatePaths } from '../i18n/routes';
 
 export interface Props {
   title: string;
   description: string;
   path?: string;
+  lang?: Lang;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { jsonLd, ...rest } = Astro.props;
+const { jsonLd, lang = 'fr', ...rest } = Astro.props;
 const extra = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+const t = useTranslations(lang);
+const { fr: hrefFr, en: hrefEn } = alternatePaths(rest.path ?? '/', lang);
 ---
 
-<BaseLayout {...rest} jsonLd={[organization(), ...extra]}>
+<BaseLayout {...rest} lang={lang} jsonLd={[organization(), ...extra]}>
   <a
     href="#contenu"
     class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-pill focus:bg-brand-magenta focus:px-4 focus:py-2 focus:text-white"
   >
-    Aller au contenu
+    {t('skip.content')}
   </a>
-  <Header />
-  <MobileDrawer />
+  <Header lang={lang} hrefFr={hrefFr} hrefEn={hrefEn} />
+  <MobileDrawer lang={lang} hrefFr={hrefFr} hrefEn={hrefEn} />
   <main id="contenu" class="pb-20 md:pb-0">
     <slot />
   </main>
-  <Footer />
-  <StickyMobileCTA />
-  <WhatsAppFloat />
+  <Footer lang={lang} />
+  <StickyMobileCTA lang={lang} />
+  <WhatsAppFloat lang={lang} />
 </BaseLayout>

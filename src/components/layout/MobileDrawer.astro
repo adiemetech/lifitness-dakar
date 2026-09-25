@@ -3,6 +3,22 @@ import { mainNav, secondaryNav } from '../../data/navigation';
 import { salles, telHref } from '../../data/salles';
 import { horaires } from '../../data/horaires';
 import Button from '../ui/Button.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import type { Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/ui';
+import { localizedPath } from '../../i18n/routes';
+
+interface Props {
+  lang?: Lang;
+  hrefFr?: string;
+  hrefEn?: string;
+}
+
+const { lang = 'fr', hrefFr = '/', hrefEn = '/en/' } = Astro.props;
+const t = useTranslations(lang);
+
+const formatTime = (time: string) =>
+  lang === 'en' ? time : time.replace(':', 'h');
 ---
 
 <div
@@ -21,39 +37,42 @@ import Button from '../ui/Button.astro';
   >
     <div class="mb-8 flex items-center justify-between">
       <p class="font-mono text-xs tracking-[0.3em] text-brand-cyan uppercase">
-        Menu
+        {t('drawer.menu')}
       </p>
-      <button
-        type="button"
-        data-drawer-close
-        class="grid size-10 place-items-center rounded-card border border-white/15 transition hover:border-brand-magenta"
-      >
-        <span class="sr-only">Fermer le menu</span>
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          aria-hidden="true"
+      <div class="flex items-center gap-3">
+        <LanguageSwitcher lang={lang} hrefFr={hrefFr} hrefEn={hrefEn} />
+        <button
+          type="button"
+          data-drawer-close
+          class="grid size-10 place-items-center rounded-card border border-white/15 transition hover:border-brand-magenta"
         >
-          <path d="M6 6l12 12M18 6L6 18" />
-        </svg>
-      </button>
+          <span class="sr-only">{t('drawer.close')}</span>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+      </div>
     </div>
 
-    <nav aria-label="Navigation mobile">
+    <nav aria-label={t('nav.mobileAria')}>
       <ul class="flex flex-col gap-1">
         {mainNav.map((item) => (
           <li>
             <a
-              href={item.href}
+              href={localizedPath(item.href, lang)}
               data-drawer-close
               class="block rounded-card px-3 py-3 text-lg font-semibold transition hover:bg-white/5 hover:text-brand-pink"
             >
-              {item.label}
+              {t(item.labelKey)}
             </a>
           </li>
         ))}
@@ -62,11 +81,11 @@ import Button from '../ui/Button.astro';
         {secondaryNav.map((item) => (
           <li>
             <a
-              href={item.href}
+              href={localizedPath(item.href, lang)}
               data-drawer-close
               class="block rounded-card px-3 py-2 text-sm text-light-primary/70 transition hover:text-white"
             >
-              {item.label}
+              {t(item.labelKey)}
             </a>
           </li>
         ))}
@@ -74,8 +93,12 @@ import Button from '../ui/Button.astro';
     </nav>
 
     <div class="mt-auto flex flex-col gap-4 pt-8">
-      <Button href="/essai-gratuit" class="w-full" data-drawer-close>
-        Réserver ma séance d'essai gratuite
+      <Button
+        href={localizedPath('/essai-gratuit', lang)}
+        class="w-full"
+        data-drawer-close
+      >
+        {t('cta.bookTrial')}
       </Button>
       <div class="flex flex-col gap-2 text-sm text-light-primary/70">
         {salles.map((salle) => (
@@ -88,8 +111,8 @@ import Button from '../ui/Button.astro';
         ))}
         {horaires.map((c) => (
           <p>
-            {c.label} : {c.opens.replace(':', 'h')} –{' '}
-            {c.closes.replace(':', 'h')}
+            {lang === 'en' ? c.labelEn : c.label} : {formatTime(c.opens)} –{' '}
+            {formatTime(c.closes)}
           </p>
         ))}
       </div>

@@ -3,23 +3,29 @@ import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import Analytics from '../components/layout/Analytics.astro';
 import Animations from '../components/layout/Animations.astro';
+import type { Lang } from '../i18n/ui';
+import { alternatePaths } from '../i18n/routes';
 
 export interface Props {
   title: string;
   description: string;
   path?: string;
+  lang?: Lang;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description, path = '/', jsonLd } = Astro.props;
+const { title, description, path = '/', lang = 'fr', jsonLd } = Astro.props;
 const origin = Astro.site?.origin ?? 'https://lifitness-dakar.com';
 const canonical = new URL(path, origin).href;
+const { fr: frPath, en: enPath } = alternatePaths(path, lang);
+const hrefFr = new URL(frPath, origin).href;
+const hrefEn = new URL(enPath === '/en' ? '/en/' : enPath, origin).href;
 const ogImage = new URL('/og-image.jpg', origin).href;
 const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -29,13 +35,16 @@ const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="fr" href={hrefFr} />
+    <link rel="alternate" hreflang="en" href={hrefEn} />
+    <link rel="alternate" hreflang="x-default" href={hrefFr} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Lifitness Dakar" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:locale" content={lang === 'en' ? 'en_US' : 'fr_FR'} />
     <meta name="twitter:card" content="summary_large_image" />
     {blocks.map((block) => (
       <script type="application/ld+json" set:html={JSON.stringify(block)} />
