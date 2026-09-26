@@ -6,8 +6,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  // Domaine à confirmer — mettre à jour avant mise en production
-  site: 'https://lifitness-dakar.com',
+  // URL provisoire — remplacer par https://lifitness-dakar.com à l'achat du domaine
+  site: 'https://lifitness-dakar.vercel.app',
   i18n: {
     locales: ['fr', 'en'],
     defaultLocale: 'fr',

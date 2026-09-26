@@ -4,7 +4,8 @@ import { horaires } from '../data/horaires';
 import type { Lang } from '../i18n/ui';
 
 export const SITE_NAME = 'Lifitness Dakar';
-export const SITE_URL = 'https://lifitness-dakar.com';
+// URL provisoire — remplacer par https://lifitness-dakar.com à l'achat du domaine
+export const SITE_URL = 'https://lifitness-dakar.vercel.app';
 export const SITE_EMAIL = 'lifitnessgyms@gmail.com';
 export const SAME_AS = [
   'https://www.facebook.com/LifitNes/',
