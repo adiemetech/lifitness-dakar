@@ -29,6 +29,10 @@ import Button from '../components/ui/Button.astro';
         Le lien est cassé ou la page a bougé. Pas de panique : tout le reste du
         club est à un clic.
       </p>
+      <p class="font-mono text-sm text-light-primary/55">
+        English: this page doesn't exist or has moved. Head back to the English
+        homepage below.
+      </p>
       <div class="flex flex-wrap gap-4">
         <Button href="/" size="lg">
           Retour à l'accueil
@@ -41,6 +45,9 @@ import Button from '../components/ui/Button.astro';
         </Button>
         <Button href="/contact" variant="ghost">
           Nous contacter
+        </Button>
+        <Button href="/en/" variant="ghost">
+          English homepage
         </Button>
       </div>
     </div>

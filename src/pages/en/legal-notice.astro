@@ -1,0 +1,83 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import { societe, hebergeur } from '../../data/legal';
+---
+
+<LegalLayout
+  lang="en"
+  title="Legal notice | Lifitness Dakar"
+  description="Legal notice for lifitness-dakar.com: publisher, hosting, intellectual property, personal data and applicable law."
+  path="/en/legal-notice"
+  pageName="Legal notice"
+>
+  <!-- PLACEHOLDER: company name, RCCM, NINEA and publication director
+       to be completed by the client before going live. -->
+  <h2>1. Site publisher</h2>
+  <p>
+    The site <strong>lifitness-dakar.com</strong> is published by
+    {societe.raisonSociale} ({societe.formeJuridique}), operating the gym
+    network
+    <strong>{societe.nomCommercial}</strong>.
+  </p>
+  <ul>
+    <li>Registered office: {societe.siege}</li>
+    <li>
+      RCCM: {societe.rccm} — NINEA: {societe.ninea}
+    </li>
+    <li>Publication director: {societe.directeurPublication}</li>
+    <li>
+      Phone:{' '}
+      <a href={`tel:${societe.telephone.replace(/[^+\d]/g, '')}`}>
+        {societe.telephone}
+      </a>
+    </li>
+    <li>
+      Email: <a href={`mailto:${societe.email}`}>{societe.email}</a>
+    </li>
+  </ul>
+
+  <h2>2. Hosting</h2>
+  <p>This site is hosted by:</p>
+  <ul>
+    <li>{hebergeur.nom}</li>
+    <li>{hebergeur.adresse}</li>
+    <li>
+      <a href={hebergeur.site}>{hebergeur.site}</a>
+    </li>
+  </ul>
+
+  <h2>3. Intellectual property</h2>
+  <p>
+    All content on the site (texts, logo, visual identity, photographs,
+    structure) is the exclusive property of {societe.nomCommercial}, unless
+    otherwise stated. Any total or partial reproduction, representation or
+    distribution without prior written authorization is prohibited.
+  </p>
+  <p>
+    Some photographs are working visuals pending replacement by the club's
+    official images.
+  </p>
+
+  <h2>4. Personal data</h2>
+  <p>
+    The processing of personal data is described in our
+    <a href="/en/privacy">privacy policy</a>. In accordance with Senegalese law
+    No. 2008-12 of January 25, 2008 on the protection of personal data, you have
+    the right to access, rectify and delete your data.
+  </p>
+
+  <h2>5. Liability</h2>
+  <p>
+    The information published (opening hours, prices, programs, schedule) is
+    provided for information purposes and may change without notice.
+    {societe.nomCommercial} cannot be held responsible for errors or omissions,
+    or for the temporary unavailability of the site.
+  </p>
+
+  <h2>6. Applicable law</h2>
+  <p>
+    This legal notice is governed by Senegalese law. Any dispute relating to the
+    use of the site falls under the jurisdiction of the courts of Dakar,
+    Senegal.
+  </p>
+</LegalLayout>

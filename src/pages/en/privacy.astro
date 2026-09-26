@@ -1,0 +1,96 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import { societe } from '../../data/legal';
+---
+
+<LegalLayout
+  lang="en"
+  title="Privacy policy | Lifitness Dakar"
+  description="How Lifitness Dakar handles your data: contact forms, WhatsApp, no server storage, cookies and your rights under Senegalese law."
+  path="/en/privacy"
+  pageName="Privacy policy"
+>
+  <h2>1. Principles</h2>
+  <p>
+    This site is a static showcase website. It contains no database, no user
+    account and no advertising tracker. We collect the minimum: only what you
+    choose to send us.
+  </p>
+
+  <h2>2. Data collected via forms</h2>
+  <p>
+    The site forms (free trial, contact, newsletter) collect: name, phone, email
+    (optional), preferred gym, goal and level (trial form), free message.
+  </p>
+  <p>
+    <strong>This data does not pass through a server we own.</strong>
+    On validation, your browser opens WhatsApp with a pre-filled message (or
+    your email software for the email copy). The site itself stores nothing: no
+    form data is saved on the hosting.
+  </p>
+  <p>
+    The data you then send us (via WhatsApp, email, phone or at the gym) is used
+    solely to: answer your request, schedule your trial session, manage your
+    membership and send you practical information if you consent.
+  </p>
+
+  <h2>3. Legal basis and purpose</h2>
+  <p>
+    Processing is based on your consent (voluntary sending of a form or message)
+    and on the performance of our services (membership management). In
+    accordance with Senegalese law No. 2008-12 of January 25, 2008 on the
+    protection of personal data, processing related to membership is subject to
+    the required formalities with the CDP.
+  </p>
+
+  <h2>4. Recipients</h2>
+  <p>
+    Only the teams of {societe.nomCommercial} (front desk and coaching staff of
+    both gyms) access your data, within the limits required for your follow-up.
+    No data is sold or transferred to third parties.
+  </p>
+
+  <h2>5. Retention period</h2>
+  <p>
+    Member data is kept for the duration of the membership, then archived for
+    the period of legal obligations. Simple contact requests not followed by a
+    membership are deleted after 12 months.
+  </p>
+
+  <h2>6. Cookies and audience measurement</h2>
+  <p>
+    The site uses <strong>no tracking cookies</strong> by default. A
+    privacy-friendly audience measurement tool (Plausible or Umami, without
+    cookies or individual profiling) may be enabled later; it counts aggregated
+    visits without identifying people. This page will be updated if so.
+  </p>
+
+  <h2>7. Your rights</h2>
+  <p>
+    You have the right to access, rectify, delete and object to your data. To
+    exercise them, write to us:
+  </p>
+  <ul>
+    <li>
+      Email: <a href={`mailto:${societe.email}`}>{societe.email}</a>
+    </li>
+    <li>
+      Phone:{' '}
+      <a href={`tel:${societe.telephone.replace(/[^+\d]/g, '')}`}>
+        {societe.telephone}
+      </a>
+    </li>
+    <li>Mail: {societe.siege}</li>
+  </ul>
+  <p>
+    You may also file a complaint with the Senegalese Commission for the
+    Protection of Personal Data (CDP).
+  </p>
+
+  <h2>8. Security</h2>
+  <p>
+    WhatsApp and email exchanges travel on third-party infrastructures beyond
+    our control. For any sensitive information, prefer an exchange at the gym or
+    by phone.
+  </p>
+</LegalLayout>

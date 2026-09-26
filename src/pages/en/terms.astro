@@ -1,0 +1,117 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import { societe } from '../../data/legal';
+import {
+  fraisInscriptionEn,
+  formulesEn,
+  noteGelEn,
+} from '../../data/en/tarifs';
+---
+
+<LegalLayout
+  lang="en"
+  title="Terms & conditions | Lifitness Dakar"
+  description="Lifitness Dakar membership terms: plans, registration fee, Comfort Card, membership freeze, payment and cancellation."
+  path="/en/terms"
+  pageName="Terms & conditions"
+>
+  <!-- PLACEHOLDER: payment methods, cooling-off period and cancellation terms
+       to be validated by the client before going live. -->
+  <h2>1. Purpose</h2>
+  <p>
+    These terms and conditions govern the memberships and services sold by
+    {societe.nomCommercial} in its Dakar gyms (Almadies and Sacré-Cœur 3) and
+    via the site lifitness-dakar.com.
+  </p>
+
+  <h2>2. Services</h2>
+  <p>
+    {societe.nomCommercial} provides access to its two gyms: strength and cardio
+    floors, group classes, boxing, EMS, aqua area and sauna, depending on the
+    plan chosen. Every membership includes the <strong>Comfort Card</strong>:
+    unlimited access to both gyms, whatever the day or opening time.
+  </p>
+
+  <h2>3. Prices</h2>
+  <p>
+    {fraisInscriptionEn.label}:{' '}
+    <strong>
+      {fraisInscriptionEn.montant} {fraisInscriptionEn.unite}
+    </strong>
+    , paid once at registration, whatever the plan.
+  </p>
+  <ul>
+    {formulesEn.map((f) => (
+      <li>
+        <strong>{f.nom}</strong> — {f.prix} {f.unite}: {f.description}
+      </li>
+    ))}
+  </ul>
+  <p>
+    Prices are shown in CFA francs (FCFA), all taxes included. They may change
+    at any time; the applicable prices are those in force on the day of
+    registration.
+  </p>
+
+  <h2>4. Duration and renewal</h2>
+  <p>
+    The monthly plan is taken out without a fixed commitment: it renews month by
+    month by tacit renewal. The 3-month and longer plans are paid in advance for
+    the chosen duration.
+  </p>
+
+  <h2>5. Membership freeze</h2>
+  <p>
+    {noteGelEn} In case of absence of more than one week (travel, illness,
+    business trip), the member may request a freeze on long-term plans. The
+    deadline is postponed accordingly, upon presentation of proof and validation
+    by the front desk.
+  </p>
+
+  <h2>6. Trial session</h2>
+  <p>
+    The first trial session is free, without commitment and without financial
+    consideration. It includes a tour of the gym and a supervised session. It
+    does not grant access to services reserved for members (specific classes,
+    EMS) unless the team agrees.
+  </p>
+
+  <h2>7. Payment</h2>
+  <p>
+    Payment is made at the gym front desk. Accepted payment methods: to be
+    completed and validated (cash, mobile money, bank card). No online payment
+    is offered on this site to date: booking forms generate a contact request,
+    not a sale.
+  </p>
+
+  <h2>8. Cancellation</h2>
+  <p>
+    The monthly plan can be stopped at any time, free of charge, by notifying
+    the front desk before the due date of the current month. Prepaid plans are
+    non-refundable, except for a membership freeze under the conditions of
+    article 5 or a case of force majeure assessed by management.
+  </p>
+
+  <h2>9. Internal rules and safety</h2>
+  <p>
+    Access to the gyms implies compliance with the internal rules displayed in
+    each club: sportswear mandatory, towel recommended, respect for equipment
+    and other members. Coaching by a trainer is strongly recommended for
+    beginners. {societe.nomCommercial} declines all responsibility in case of
+    unsupervised use of equipment or non-compliance with instructions.
+  </p>
+
+  <h2>10. Personal data</h2>
+  <p>
+    Data collected at registration or via the site is processed in accordance
+    with our <a href="/en/privacy">privacy policy</a> and Senegalese law No.
+    2008-12 of January 25, 2008.
+  </p>
+
+  <h2>11. Disputes</h2>
+  <p>
+    These terms are governed by Senegalese law. Failing an amicable resolution,
+    any dispute falls under the jurisdiction of the courts of Dakar. Contact:
+    <a href={`mailto:${societe.email}`}>{societe.email}</a>.
+  </p>
+</LegalLayout>
